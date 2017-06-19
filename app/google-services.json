@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "865665686680",
+    "firebase_url": "https://agriadvisor-394af.firebaseio.com",
+    "project_id": "agriadvisor-394af",
+    "storage_bucket": "agriadvisor-394af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865665686680:android:9f88b5686244b6b1",
+        "android_client_info": {
+          "package_name": "com.advisor.agriot.zeon.agriadvisor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "865665686680-31a2pui6hmnl062tcrhrm5rpq3hmvil5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoub7HzuWZuptPw-FWF-GNOKGhNcCWgLw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

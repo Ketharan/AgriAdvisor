@@ -36,7 +36,7 @@ public class SignupActvity extends AppCompatActivity implements View.OnClickList
         inputUsername = (EditText) findViewById(R.id.username);
         inputPassword = (EditText) findViewById(R.id.password);
         inputConfirmpassword = (EditText) findViewById(R.id.confirmpassword);
-
+        progressBar=(ProgressBar) findViewById(R.id.progressBar);
 
 
 
@@ -62,13 +62,14 @@ public class SignupActvity extends AppCompatActivity implements View.OnClickList
 
 
     private void registeruser(){
-        String username=inputUsername.getText().toString().trim()+"@agriot.com";
-        String password=inputPassword.getText().toString().trim();
+        String username=inputUsername.getText().toString().trim();
         String confirmpassword=inputConfirmpassword.getText().toString().trim();
         if(TextUtils.isEmpty(username)){
             Toast.makeText(getApplicationContext(),"Please Enter User Name",Toast.LENGTH_SHORT).show();
             return;
         }
+        username=username+"@agriot.com";
+        String password=inputPassword.getText().toString().trim();;
         if (isValidPassword(password)){
             //password empty
             Toast.makeText(this,"Password is too short, Try More than 6 characters",Toast.LENGTH_SHORT).show();
@@ -88,10 +89,11 @@ public class SignupActvity extends AppCompatActivity implements View.OnClickList
 
 
 
-
+        progressBar.setVisibility(View.VISIBLE);
         auth.createUserWithEmailAndPassword(username,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                progressBar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
                     Toast.makeText(getApplicationContext(),"Registered Successfly",Toast.LENGTH_SHORT).show();
                     //finish();
@@ -160,7 +162,7 @@ public class SignupActvity extends AppCompatActivity implements View.OnClickList
 //                    Toast.makeText(getApplicationContext(),"Password mismatch. Please confirm Your Password correctly",Toast.LENGTH_SHORT).show();
 //                    return;
 //                }
-//progressBar.setVisibility(v.VISIBLE);
+//
 //create user
 //                auth.createUserWithEmailAndPassword(username,password).addOnCompleteListener(SignupActvity.this, new OnCompleteListener<AuthResult>() {
 //                    @Override

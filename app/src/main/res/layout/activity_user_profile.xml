@@ -169,7 +169,8 @@
                 android:layout_alignStart="@+id/textphonenumber"
                 android:layout_below="@+id/textphonenumber"
                 android:ems="10"
-                android:inputType="phone" />
+                android:inputType="phone"
+                tools:text="+94" />
 
             <TextView
                 android:id="@+id/textstreetaddress"

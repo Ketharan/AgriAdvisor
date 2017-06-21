@@ -54,8 +54,8 @@ public class SignupActvity extends AppCompatActivity implements View.OnClickList
 
         if(auth.getCurrentUser()!= null){
             //profileActivity
-           // finish();
-           // startActivity(new Intent(getApplicationContext(),.class));
+           finish();
+           startActivity(new Intent(getApplicationContext(),UserProfile.class));
         }
         connected = false;
         connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -146,9 +146,8 @@ public class SignupActvity extends AppCompatActivity implements View.OnClickList
         if(isconnected(connectivityManager)) {
             if (v == btnSignup) {
 
-                    //registeruser();
-                finish();
-                startActivity(new Intent(this,UserProfile.class));
+                    registeruser();
+
 
 
             }

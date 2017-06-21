@@ -115,8 +115,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 progressBar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
                     Toast.makeText(getApplicationContext(),"Signup Successfly",Toast.LENGTH_SHORT).show();
-                    //finish();
-                    //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                    finish();
+                    startActivity(new Intent(getApplicationContext(),UserProfile.class));
                 }else{
                     Toast.makeText(getApplicationContext(),"Signup Failed, Please Try again",Toast.LENGTH_SHORT).show();
                 }

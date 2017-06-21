@@ -1,6 +1,9 @@
 package com.advisor.agriot.zeon.agriadvisor;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +26,8 @@ public class SignupActvity extends AppCompatActivity implements View.OnClickList
     private Button btnSignin,btnSignup;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
+    private boolean connected;
+    private ConnectivityManager connectivityManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +54,38 @@ public class SignupActvity extends AppCompatActivity implements View.OnClickList
 
         if(auth.getCurrentUser()!= null){
             //profileActivity
-            //finish();
-            //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+           // finish();
+           // startActivity(new Intent(getApplicationContext(),.class));
         }
+        connected = false;
+        connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+        }
+        else{
+            connected = false;
+            Toast.makeText(getApplicationContext(),"There is No Internet connection",Toast.LENGTH_LONG).show();
+
+        }
+
+    }
+
+    private boolean isconnected(ConnectivityManager connectivityManager){
+        connected = false;
+        connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+        }
+        else{
+            connected = false;
+
+        }
+        return  connected;
+
     }
     private boolean isValidPassword(String password){
         if (password.length()>6){
@@ -96,8 +130,8 @@ public class SignupActvity extends AppCompatActivity implements View.OnClickList
                 progressBar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
                     Toast.makeText(getApplicationContext(),"Registered Successfly",Toast.LENGTH_SHORT).show();
-                    //finish();
-                    //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                    finish();
+                    startActivity(new Intent(getApplicationContext(),UserProfile.class));
                 }else{
                     Toast.makeText(getApplicationContext(),"Registered Failed, Please Try again",Toast.LENGTH_SHORT).show();
                 }
@@ -109,13 +143,20 @@ public class SignupActvity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if(v==btnSignup){
-            registeruser();
+        if(isconnected(connectivityManager)) {
+            if (v == btnSignup) {
 
-        }
-        if(v==btnSignin){
-            finish();
-            startActivity(new Intent(this,LoginActivity.class));
+                    registeruser();
+
+
+            }
+            if (v == btnSignin) {
+                finish();
+                startActivity(new Intent(this, LoginActivity.class));
+            }
+        }else{
+            Toast.makeText(getApplicationContext(), "There is No Internet connection", Toast.LENGTH_LONG).show();
+
         }
     }
     }

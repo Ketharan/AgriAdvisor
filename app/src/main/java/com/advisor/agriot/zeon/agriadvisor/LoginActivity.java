@@ -1,7 +1,10 @@
 package com.advisor.agriot.zeon.agriadvisor;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +26,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin;
+    private boolean connected;
+    private ConnectivityManager connectivityManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +49,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //set Listener for buttons
         btnLogin.setOnClickListener(this);
         btnSignup.setOnClickListener(this);
+
+
+        connected = false;
+        connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+        }
+        else{
+            connected = false;
+            Toast.makeText(getApplicationContext(),"There is No Internet connection",Toast.LENGTH_LONG).show();
+
+        }
+
+    }
+
+    private boolean isconnected(ConnectivityManager connectivityManager){
+        connected = false;
+        connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+        }
+        else{
+            connected = false;
+
+        }
+        return  connected;
 
     }
         private boolean isValidPassword(String password){
@@ -92,6 +128,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        if(isconnected(connectivityManager)){
         if (v==btnLogin){
 
             userlogin();
@@ -100,6 +137,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             finish();
             startActivity(new Intent(this,SignupActvity.class));
+        }}
+        else {
+            Toast.makeText(getApplicationContext(), "There is No Internet connection", Toast.LENGTH_LONG).show();
+
         }
     }
 }

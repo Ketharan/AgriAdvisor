@@ -103,7 +103,7 @@ public class SignupActvity extends AppCompatActivity implements View.OnClickList
             return;
         }
         username=username+"@agriot.com";
-        String password=inputPassword.getText().toString().trim();;
+        String password=inputPassword.getText().toString().trim();
         if (isValidPassword(password)){
             //password empty
             Toast.makeText(this,"Password is too short, Try More than 6 characters",Toast.LENGTH_SHORT).show();
@@ -146,7 +146,9 @@ public class SignupActvity extends AppCompatActivity implements View.OnClickList
         if(isconnected(connectivityManager)) {
             if (v == btnSignup) {
 
-                    registeruser();
+                    //registeruser();
+                finish();
+                startActivity(new Intent(this,UserProfile.class));
 
 
             }

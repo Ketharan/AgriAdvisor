@@ -33,4 +33,12 @@
 
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="save">SAVE</string>
+    <string name="firstname">First Name</string>
+    <string name="lastname">Last Name</string>
+    <string name="phonenumber">Phone Number</string>
+    <string name="streetaddress">Street Address</string>
+    <string name="optionalstreetaddress">(optional)</string>
+    <string name="city">City</string>
+    <string name="province">Province</string>
+
 </resources>

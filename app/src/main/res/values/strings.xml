@@ -33,6 +33,7 @@
 
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="save">SAVE</string>
+    <string name="logout">LOGOUT</string>
     <string name="firstname">First Name</string>
     <string name="lastname">Last Name</string>
     <string name="phonenumber">Phone Number</string>
@@ -40,5 +41,11 @@
     <string name="optionalstreetaddress">(optional)</string>
     <string name="city">City</string>
     <string name="province">Province</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 
 </resources>

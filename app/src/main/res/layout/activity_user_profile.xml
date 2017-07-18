@@ -106,16 +106,50 @@
             android:orientation="vertical"
             android:padding="@dimen/activity_horizontal_margin">
 
-            <TextView
-                android:id="@+id/textprofilename"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="right"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_horizontal_margin">
 
-                android:layout_marginEnd="39dp"
-                android:layout_marginStart="20dp"
-                android:text="Hai"
-                android:textAlignment="textEnd"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textprofilename"
+                    android:layout_width="275dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginEnd="39dp"
+                    android:layout_marginStart="20dp"
+                    android:text="Hai"
+                    android:textAlignment="textEnd"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnUserprofile_Logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+
+
+                    android:layout_marginTop="10dp"
+                    android:background="@color/button_theme_color"
+                    android:text="@string/logout" />
+                <Button
+                    android:id="@+id/btnTest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+
+
+                    android:layout_marginTop="10dp"
+                    android:background="@color/button_theme_color"
+                    android:text="TEST" />
+
+
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/textfirstname"
@@ -123,7 +157,7 @@
                 android:layout_height="wrap_content"
 
 
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="60dp"
                 android:text="@string/firstname" />
 
             <EditText

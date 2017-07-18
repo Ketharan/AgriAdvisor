@@ -4,11 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -19,13 +20,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 
-public class UserProfile extends AppCompatActivity implements View.OnClickListener{
-
-    private Button btnsave,btnlogout,btntest;
+public class EditUserProfileActivity extends AppCompatActivity implements View.OnClickListener{
+    private Button btnsave,btnlogout;
     private EditText textfirstname,textlastname,textphonenumber,textstreetaddress,textstrretoptional,textcity,textprovince;
     private boolean connected;
     private ConnectivityManager connectivityManager;
@@ -33,70 +37,62 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
     private TextView profilename;
     private ProgressBar progressBar;
     private DatabaseReference databaseReference;
-
-
-
+    private ArrayList<String> arrayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
+        setContentView(R.layout.activity_edit_user_profile);
 
-        btntest=(Button) findViewById(R.id.btnTest);
-        btnlogout=(Button) findViewById(R.id.btnUserprofile_Logout);
-        btnsave=(Button) findViewById(R.id.btnSave);
-        textfirstname=(EditText) findViewById(R.id.editTextfirstname);
-        textlastname=(EditText) findViewById(R.id.editTextlastname);
-        textphonenumber=(EditText) findViewById(R.id.editTextphonenumber);
-        textstreetaddress=(EditText) findViewById(R.id.editTextstreetaddress);
-        textstrretoptional=(EditText) findViewById(R.id.editTextstreetaddressoptional);
-        textcity=(EditText) findViewById(R.id.editTextcity);
-        textprovince=(EditText) findViewById(R.id.editTextprovince);
 
-        profilename=(TextView)findViewById(R.id.textprofilename);
+        btnlogout=(Button) findViewById(R.id.btnedituserprofile__Logout);
+        btnsave=(Button) findViewById(R.id.btnedituserprofile_Save);
+        textfirstname=(EditText) findViewById(R.id.editTextedituserprofile_firstname);
+        textlastname=(EditText) findViewById(R.id.editTextedituserprofile_lastname);
+        textphonenumber=(EditText) findViewById(R.id.editTextedituserprofile_phonenumber);
+        textstreetaddress=(EditText) findViewById(R.id.editTextedituserprofile_streetaddress);
+        textstrretoptional=(EditText) findViewById(R.id.editTextedituserprofile_streetaddressoptional);
+        textcity=(EditText) findViewById(R.id.editTextedituserprofile_city);
+        textprovince=(EditText) findViewById(R.id.editTextedituserprofile_province);
+
+        profilename=(TextView)findViewById(R.id.edituserprofile_textprofilename);
         auth = FirebaseAuth.getInstance();
         progressBar=(ProgressBar) findViewById(R.id.progressBar);
 
         btnsave.setOnClickListener(this);
         btnlogout.setOnClickListener(this);
-        btntest.setOnClickListener(this);
+
+        arrayList=new ArrayList<>();
+
         databaseReference= FirebaseDatabase.getInstance().getReference();
 
         //check current user
         if(auth.getCurrentUser()== null){
             //LoginActivity
-             finish();
+            finish();
             startActivity(new Intent(getApplicationContext(),LoginActivity.class));
         }
         FirebaseUser user=auth.getCurrentUser();
-        profilename.setText(auth.getCurrentUser().getEmail());
-        //check internet connection
-        connected = false;
-        connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-            //we are connected to a network
-            connected = true;
-        }
-        else{
-            connected = false;
-            Toast.makeText(getApplicationContext(),"There is No Internet connection",Toast.LENGTH_LONG).show();
 
-        }
+        databaseReference.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserProfileDatabase userProfileDatabase=dataSnapshot.getValue(UserProfileDatabase.class);
+                textfirstname.setText(userProfileDatabase.firstname);
+                textlastname.setText(userProfileDatabase.lastname);
+                textcity.setText(userProfileDatabase.city);
+                textphonenumber.setText(userProfileDatabase.phonenumber);
+                textprovince.setText(userProfileDatabase.province);
+                textstreetaddress.setText(userProfileDatabase.streetaddress);
+                textstrretoptional.setText(userProfileDatabase.optionalstreetaddress);
+            }
 
-    }
-    private boolean isconnected(ConnectivityManager connectivityManager){
-        connected = false;
-        connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-            //we are connected to a network
-            connected = true;
-        }
-        else{
-            connected = false;
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-        }
-        return  connected;
+            }
+        });
+
+
 
     }
     private void savedata(){
@@ -154,6 +150,21 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
 
 
     }
+    private boolean isconnected(ConnectivityManager connectivityManager){
+        connected = false;
+        connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+        }
+        else{
+            connected = false;
+
+        }
+        return  connected;
+
+    }
 
     @Override
     public void onClick(View v) {
@@ -166,15 +177,9 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
                 finish();
                 startActivity(new Intent(this,LoginActivity.class));
             }
-            if(v==btntest){
-                finish();
-                startActivity(new Intent(this,EditUserProfileActivity.class));
-
-            }
 
         }else{
             Toast.makeText(getApplicationContext(),"Internet conncetion lost.Please CHeck Your Internet connection.",Toast.LENGTH_SHORT).show();
         }
-
     }
 }

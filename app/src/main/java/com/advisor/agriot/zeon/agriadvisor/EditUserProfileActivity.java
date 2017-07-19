@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -38,6 +40,7 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
     private ProgressBar progressBar;
     private DatabaseReference databaseReference;
     private ArrayList<String> arrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +56,7 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         textstrretoptional=(EditText) findViewById(R.id.editTextedituserprofile_streetaddressoptional);
         textcity=(EditText) findViewById(R.id.editTextedituserprofile_city);
         textprovince=(EditText) findViewById(R.id.editTextedituserprofile_province);
+
 
         profilename=(TextView)findViewById(R.id.edituserprofile_textprofilename);
         auth = FirebaseAuth.getInstance();
@@ -72,6 +76,7 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
             startActivity(new Intent(getApplicationContext(),LoginActivity.class));
         }
         FirebaseUser user=auth.getCurrentUser();
+        profilename.setText(auth.getCurrentUser().getEmail());
 
         databaseReference.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -142,6 +147,9 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
 
                 if (task.isSuccessful()){
                     Toast.makeText(getApplicationContext(),"Thank You.Information saved Successfully",Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
                 }else {
                     Toast.makeText(getApplicationContext(),"Sorry.Unable to save Your Profile.Please Try Again.",Toast.LENGTH_SHORT).show();
                 }
@@ -163,6 +171,12 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
 
         }
         return  connected;
+
+    }
+    @Override
+    public void onBackPressed() {
+        finish();
+        startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
     }
 

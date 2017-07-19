@@ -54,8 +54,8 @@ public class SignupActvity extends AppCompatActivity implements View.OnClickList
 
         if(auth.getCurrentUser()!= null){
             //profileActivity
-           finish();
-           startActivity(new Intent(getApplicationContext(),UserProfile.class));
+            finish();
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
         }
         connected = false;
         connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);

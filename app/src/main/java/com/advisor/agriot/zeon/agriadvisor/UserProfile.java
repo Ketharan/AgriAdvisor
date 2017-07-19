@@ -146,6 +146,9 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
 
                 if (task.isSuccessful()){
                     Toast.makeText(getApplicationContext(),"Thank You.Information saved Successfully",Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
                 }else {
                     Toast.makeText(getApplicationContext(),"Sorry.Unable to save Your Profile.Please Try Again.",Toast.LENGTH_SHORT).show();
                 }

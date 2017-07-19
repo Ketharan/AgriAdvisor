@@ -20,6 +20,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText inputUsername, inputPassword;
@@ -28,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button btnSignup, btnLogin;
     private boolean connected;
     private ConnectivityManager connectivityManager;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +44,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
-            //startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            //finish();
+            finish();
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
         }
         //define
         inputUsername=(EditText) findViewById(R.id.username);
@@ -46,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnSignup=(Button) findViewById(R.id.btn_sign_up);
         btnLogin=(Button) findViewById(R.id.btn_login);
         progressBar=(ProgressBar) findViewById(R.id.progressBar);
+        databaseReference= FirebaseDatabase.getInstance().getReference();
         //set Listener for buttons
         btnLogin.setOnClickListener(this);
         btnSignup.setOnClickListener(this);
@@ -116,7 +125,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(task.isSuccessful()){
                     Toast.makeText(getApplicationContext(),"Signup Successfly",Toast.LENGTH_SHORT).show();
                     finish();
-                    startActivity(new Intent(getApplicationContext(),UserProfile.class));
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
                 }else{
                     Toast.makeText(getApplicationContext(),"Signup Failed, Please Try again",Toast.LENGTH_SHORT).show();
                 }
@@ -124,6 +133,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
 
     }
+
 
 
     @Override

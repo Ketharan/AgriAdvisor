@@ -30,7 +30,9 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TestActivity" />
-        <activity android:name=".EditUserProfileActivity"></activity>
+        <activity android:name=".EditUserProfileActivity" />
+        <activity android:name=".MydevicesActivitty" />
+        <activity android:name=".DeviceDataActivity"></activity>
     </application>
 
 </manifest>

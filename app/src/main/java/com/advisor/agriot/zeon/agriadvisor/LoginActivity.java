@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private ConnectivityManager connectivityManager;
     private DatabaseReference databaseReference;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
         //define
+
+
+
         inputUsername=(EditText) findViewById(R.id.username);
         inputPassword=(EditText) findViewById(R.id.password);
         btnSignup=(Button) findViewById(R.id.btn_sign_up);

@@ -1,5 +1,6 @@
 package com.advisor.agriot.zeon.agriadvisor;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        FragmentManager fragmentManager=getFragmentManager();
 
         if (id == R.id.nav_camera) {
             Toast.makeText(getApplicationContext(),"Camera Successfly",Toast.LENGTH_SHORT).show();
@@ -102,10 +104,17 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_mydevices) {
+            finish();
+            startActivity(new Intent(getApplicationContext(),MydevicesActivitty.class));
 
         } else if (id == R.id.nav_adddevice) {
-
-        }else if (id == R.id.nav_profile){
+            finish();
+            Intent intent=new Intent(getApplicationContext(),DeviceDataActivity.class);
+            String device="device1";
+            intent.putExtra("keydevice",device);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_profile){
             finish();
             startActivity(new Intent(getApplicationContext(),EditUserProfileActivity.class));
         }else if(id == R.id.nav_logout){

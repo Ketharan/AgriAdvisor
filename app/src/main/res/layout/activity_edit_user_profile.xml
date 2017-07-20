@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.advisor.agriot.zeon.agriadvisor.EditUserProfileActivity">
+
+    <ScrollView
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="start"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="right"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_horizontal_margin">
+
+                <TextView
+                    android:id="@+id/edituserprofile_textprofilename"
+                    android:layout_width="275dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginEnd="39dp"
+                    android:layout_marginStart="20dp"
+                    android:text="Hai"
+                    android:textAlignment="textEnd"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnedituserprofile__Logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+
+
+                    android:layout_marginTop="10dp"
+                    android:background="@color/button_theme_color"
+                    android:text="@string/logout" />
+
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/textedituserprofile_firstname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:layout_marginTop="60dp"
+                android:text="@string/firstname" />
+
+            <EditText
+                android:id="@+id/editTextedituserprofile_firstname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textfirstname"
+                android:layout_below="@+id/textfirstname"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/textedituserprofile_lastname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/editTextfirstname"
+                android:layout_marginTop="10dp"
+                android:text="@string/lastname" />
+
+            <EditText
+                android:id="@+id/editTextedituserprofile_lastname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textlastname"
+                android:layout_below="@+id/textlastname"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/textedituserprofile_phonenumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/editTextlastname"
+                android:layout_marginTop="10dp"
+                android:text="@string/phonenumber" />
+
+            <EditText
+                android:id="@+id/editTextedituserprofile_phonenumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textphonenumber"
+                android:layout_below="@+id/textphonenumber"
+                android:ems="10"
+                android:inputType="phone"
+                tools:text="+94" />
+
+            <TextView
+                android:id="@+id/textedituserprofile_streetaddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/streetaddress" />
+
+            <EditText
+                android:id="@+id/editTextedituserprofile_streetaddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/editTextedituserprofile_streetaddressoptional"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/optionalstreetaddress"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/textedituserprofile_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/city" />
+
+            <EditText
+                android:id="@+id/editTextedituserprofile_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/textedituserprofile_province"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/province" />
+
+            <EditText
+                android:id="@+id/editTextedituserprofile_province"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/btnedituserprofile_Save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextprovince"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="76dp"
+                android:background="@color/button_theme_color"
+                android:text="@string/save" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,7 +1,7 @@
 package com.advisor.agriot.zeon.agriadvisor;
 
 /**
- * Created by Haran on 20/07/2017.
+ * Created by Haran on 21/07/2017.
  */
 
 import android.support.v7.widget.RecyclerView;
@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class sensorDataAdapter extends RecyclerView.Adapter<sensorDataAdapter.MyViewHolder> {
+public class cropDataAdapter extends RecyclerView.Adapter<cropDataAdapter.MyViewHolder> {
 
-    private ArrayList<dataModel> dataSet;
+    private ArrayList<crop> crop;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -31,8 +31,8 @@ public class sensorDataAdapter extends RecyclerView.Adapter<sensorDataAdapter.My
         }
     }
 
-    public sensorDataAdapter(ArrayList<dataModel> data) {
-        this.dataSet = data;
+    public cropDataAdapter(ArrayList<crop> data) {
+        this.crop = data;
     }
 
     @Override
@@ -41,11 +41,7 @@ public class sensorDataAdapter extends RecyclerView.Adapter<sensorDataAdapter.My
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cards_layout, parent, false);
 
-<<<<<<< HEAD
-        view.setOnClickListener(DeviceDataActivity.myOnClickListener);
-=======
         //view.setOnClickListener(agriotMain.myOnClickListener);
->>>>>>> bf594fb58331886b6049d16fc58380bfe443b71f
 
         MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
@@ -58,13 +54,13 @@ public class sensorDataAdapter extends RecyclerView.Adapter<sensorDataAdapter.My
         TextView textViewVersion = holder.textViewVersion;
         ImageView imageView = holder.imageViewIcon;
 
-        textViewName.setText(dataSet.get(listPosition).getName());
-        textViewVersion.setText(dataSet.get(listPosition).getVersion());
-        imageView.setImageResource(dataSet.get(listPosition).getImage());
+        textViewName.setText(crop.get(listPosition).getName());
+        //textViewVersion.setText(crop.get(listPosition).getVersion());
+        imageView.setImageResource(crop.get(listPosition).getImage());
     }
 
     @Override
     public int getItemCount() {
-        return dataSet.size();
+        return crop.size();
     }
 }

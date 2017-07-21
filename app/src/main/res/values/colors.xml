@@ -3,6 +3,7 @@
     <color name="colorPrimary">#b0f2b9</color>
     <color name="colorPrimaryDark">#b0f2b9</color>
     <color name="colorAccent">#FF4081</color>
+<<<<<<< HEAD
 
     <color name="green">#47A64A</color>
     <color name="color_white">#fefefe</color>
@@ -27,4 +28,10 @@
     <color name="btn_logut_bg">#ff6861</color>
     <color name="black">#000000</color>
 
+=======
+	<color name="green">#47A64A</color>
+    <color name="color_white">#fefefe</color>
+    <color name="green_header">#1AA620</color>
+>>>>>>> bf594fb58331886b6049d16fc58380bfe443b71f
 </resources>
+

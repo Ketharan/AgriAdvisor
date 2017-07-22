@@ -41,7 +41,11 @@ public class sensorDataAdapter extends RecyclerView.Adapter<sensorDataAdapter.My
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cards_layout, parent, false);
 
+<<<<<<< HEAD
+        view.setOnClickListener(DeviceDataActivity.myOnClickListener);
+=======
         //view.setOnClickListener(agriotMain.myOnClickListener);
+>>>>>>> bf594fb58331886b6049d16fc58380bfe443b71f
 
         MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;

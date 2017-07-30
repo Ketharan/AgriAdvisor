@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.advisor.agriot.zeon.agriadvisor.croptechActivity"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:id="@+id/textView_fertilizer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="Tomato -> Crop Installation"
+        android:textSize="18dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#aed581"
+        android:padding="15dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recommended Tools:"
+        android:paddingLeft="10dp"
+        android:textSize="16dp" />
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:text="mydeals.lk/garden tools"
+        android:background="#9ccc65"
+        android:textColor="#33691E"
+        android:textSize="16dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_local_grocery_store_black_24dp"
+        android:text="Store"
+        android:layout_gravity="right"
+        android:background="#fff176"
+        android:padding="10dp"
+        android:layout_margin="10dp"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#aed581"
+        android:padding="15dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:weightSum="3"
+        android:padding="10dp">
+
+
+        <Button
+            android:textSize="13dp"
+
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="Temprature \n 21-27 C"
+            android:background="@color/colorPrimary"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1" />
+
+
+        <Button
+            android:textSize="13dp"
+
+            android:id="@+id/button2"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:background="#c5e1a5"
+            android:text="period\n mid march\n end august" />
+
+
+        <Button
+            android:textSize="13dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="soil PH\n 5.8-6.8"
+            android:background="@color/colorPrimary"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1" />
+
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#aed581"
+        android:padding="15dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:weightSum="3"
+        android:padding="10dp">
+
+
+        <Button
+
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="Soil depth \n 15-20 cm"
+            android:background="#c5e1a5"
+            android:textSize="13dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1" />
+
+
+        <Button
+
+
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:textSize="13dp"
+            android:background="@color/colorPrimary"
+            android:text="peferable \n sandy loam soil" />
+
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:text="Transplanting \n 3-5 true leaves grown"
+            android:background="#c5e1a5"
+            android:textSize="13dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1" />
+
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#aed581"
+        android:padding="15dp"/>
+    <TextView
+        android:id="@+id/textview_fertilizer_rate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="#9ccc65"
+        android:textColor="#d50000"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:text="Tomato is not resistant to drought.\n"
+        android:textSize="16dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#aed581"
+        android:padding="15dp"/>
+
+
+</LinearLayout>

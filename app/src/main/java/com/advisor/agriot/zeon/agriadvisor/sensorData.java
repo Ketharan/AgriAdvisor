@@ -15,20 +15,22 @@ import android.support.v7.widget.RecyclerView;
 
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 
 
 
-public class agriotMain extends AppCompatActivity implements android.view.View.OnClickListener {
+public class sensorData extends AppCompatActivity implements android.view.View.OnClickListener {
 
-    /* working code for sensor data recycler view
 
-            **********
-            *
-            *
-            *
-            *  */
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
@@ -37,23 +39,27 @@ public class agriotMain extends AppCompatActivity implements android.view.View.O
     private static ArrayList<Integer> removedItems;
 
 
-
-
-
-
+    //firebase related fields
+    private FirebaseAuth auth;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Context context = getApplicationContext();
-        setContentView(R.layout.activity_main);
-
-        //myOnClickListener = new MyOnClickListener(this);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        setContentView(R.layout.sensor_data);
 
 
-        /*
-            *********working recycler view for sensorData*/
+        //firebase implementation
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference= firebaseDatabase.getReference();
 
+        auth = FirebaseAuth.getInstance();
+        user=auth.getCurrentUser();
+
+        myOnClickListener = new MyOnClickListener(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
@@ -63,43 +69,74 @@ public class agriotMain extends AppCompatActivity implements android.view.View.O
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        data = new ArrayList<dataModel>();
-        for (int i = 0; i < myData.nameArray.length; i++) {
-            data.add(new dataModel(
-                    myData.nameArray[i],
-                    myData.versionArray[i],
-                    myData.id_[i],
-                    myData.drawableArray[i]
-            ));
-        }
-
-        removedItems = new ArrayList<Integer>();
-
-        adapter = new sensorDataAdapter(data);
-        recyclerView.setAdapter(adapter);
 
 
 
+        //firebase connectivity for sensor data
 
+        databaseReference.child(user.getUid()).child("device").addValueEventListener(new ValueEventListener() {
+            String[] devicedata = new String[5];
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot innerNode : dataSnapshot.getChildren()) {
+                    deviceNode devicenode = innerNode.getValue(deviceNode.class);
+                    DeviceData deviceData = devicenode.data;
 
-
-
-
-
-        //stateRepo repo = new stateRepo(context);
-        //stateVariable stateVar = new stateVariable();
-        //stateVar.state = "0";
-        //stateVar.state_id = 0;
-        //repo.insert(stateVar);
-        //stateVariable stateVar1 = repo.getstateVariableById(0);
-
-
-        //viewButton(repo);
+                    devicedata[0] = deviceData.temperature;
+                    devicedata[1] = deviceData.humidity;
+                    devicedata[2] = deviceData.light;
+                    devicedata[3] = deviceData.moisture;
+                    devicedata[4] = deviceData.ec;
+                    String batteryLevel = devicenode.battery;
+                    String lastUpdate = devicenode.lastBroadcast;
+                    TextView txtBattery  = (TextView) findViewById(R.id.battery_life);
+                    TextView txtLastupdate = (TextView)  findViewById(R.id.time);
+                    txtBattery.setText(batteryLevel);
+                    txtLastupdate.setText(lastUpdate);
+                }
 
 
 
 
 
+                data = new ArrayList<dataModel>();
+                for (int j = 0; j < myData.nameArray.length; j++) {
+                    data.add(new dataModel(
+                            devicedata[j],
+                            myData.versionArray[j],
+                            myData.id_[j],
+                            myData.drawableArray[j]
+                    ));
+                }
+
+                removedItems = new ArrayList<Integer>();
+
+                adapter = new sensorDataAdapter(data);
+                recyclerView.setAdapter(adapter);
+
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+//        data = new ArrayList<dataModel>();
+//        for (int i = 0; i < myData.nameArray.length; i++) {
+//            data.add(new dataModel(
+//                    myData.nameArray[i],
+//                    myData.versionArray[i],
+//                    myData.id_[i],
+//                    myData.drawableArray[i]
+//            ));
+//        }
+//
+//        removedItems = new ArrayList<Integer>();
+//
+//        adapter = new sensorDataAdapter(data);
+//        recyclerView.setAdapter(adapter);
 
     }
 

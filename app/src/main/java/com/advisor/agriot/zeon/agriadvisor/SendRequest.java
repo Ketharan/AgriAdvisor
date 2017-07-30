@@ -38,6 +38,10 @@ public class SendRequest extends AsyncTask<String, Void, String> {
     protected void onPreExecute() {
     }
 
+    public void setParams(){
+
+    }
+
     protected String doInBackground(String... arg0) {
 
         try {

@@ -16,17 +16,19 @@ import java.util.ArrayList;
 public class cropDataAdapter extends RecyclerView.Adapter<cropDataAdapter.MyViewHolder> {
 
     private ArrayList<crop> crop;
+    static int counter = 0;
+    static Integer[] typeArray = {0,1,2,3,4,5,6,7};
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewName;
-        TextView textViewVersion;
+        //TextView textViewVersion;
         ImageView imageViewIcon;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             this.textViewName = (TextView) itemView.findViewById(R.id.textViewName);
-            this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
+            //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
             this.imageViewIcon = (ImageView) itemView.findViewById(R.id.imageView);
         }
     }
@@ -38,12 +40,40 @@ public class cropDataAdapter extends RecyclerView.Adapter<cropDataAdapter.MyView
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent,
                                            int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cards_layout, parent, false);
 
-        //view.setOnClickListener(agriotMain.myOnClickListener);
+        View view;
+        MyViewHolder myViewHolder;
+        view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.cart_crop_g1, parent, false);
 
-        MyViewHolder myViewHolder = new MyViewHolder(view);
+        view.setOnClickListener(cropSuitability.myOnClickListener);
+
+        myViewHolder = new MyViewHolder(view);
+
+        if (cropDataAdapter.typeArray[cropDataAdapter.counter]== 0 ) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.cart_crop_g1, parent, false);
+
+            myViewHolder = new MyViewHolder(view);
+            cropDataAdapter.counter++;
+            view.setOnClickListener(cropSuitability.myOnClickListener);
+            return myViewHolder;
+
+        }else if (cropDataAdapter.typeArray[cropDataAdapter.counter]== 1) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.carts_crop_g2, parent, false);
+            myViewHolder = new MyViewHolder(view);
+            cropDataAdapter.counter++;
+            view.setOnClickListener(cropSuitability.myOnClickListener);
+            return myViewHolder;
+        }else if (cropDataAdapter.typeArray[cropDataAdapter.counter]== 2) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.carts_crop_g3, parent, false);
+            myViewHolder = new MyViewHolder(view);
+            cropDataAdapter.counter++;
+            view.setOnClickListener(cropSuitability.myOnClickListener);
+            return myViewHolder;
+        }
         return myViewHolder;
     }
 
@@ -51,7 +81,7 @@ public class cropDataAdapter extends RecyclerView.Adapter<cropDataAdapter.MyView
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
 
         TextView textViewName = holder.textViewName;
-        TextView textViewVersion = holder.textViewVersion;
+        //TextView textViewVersion = holder.textViewVersion;
         ImageView imageView = holder.imageViewIcon;
 
         textViewName.setText(crop.get(listPosition).getName());

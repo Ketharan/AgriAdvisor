@@ -1,0 +1,128 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:paddingBottom="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="5dp"
+
+
+    >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="150dp"
+
+        android:background="@drawable/border"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:scrollbars="vertical">
+
+
+    </android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="355dp"
+        android:background="@drawable/border"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/imginfo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="15dp"
+            android:foregroundGravity="top|right"
+            app:srcCompat="@drawable/info" />
+
+        <TextView
+            android:id="@+id/txtinfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imginfo"
+            android:layout_alignTop="@+id/imginfo"
+            android:layout_marginRight="10dp"
+            android:layout_toEndOf="@+id/imginfo"
+            android:foregroundGravity="top|right"
+            android:paddingTop="8dp"
+            android:text="@string/info"
+            android:textAlignment="center"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/divider_economy"
+            android:layout_width="111dp"
+            android:layout_height="10dp"
+            android:layout_marginLeft="5dp"
+
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider_economy"
+            android:foregroundGravity="bottom|left" />
+
+        <View
+            android:id="@+id/divider_farming"
+            android:layout_width="111dp"
+            android:layout_height="10dp"
+
+            android:layout_alignParentBottom="true"
+
+            android:layout_marginLeft="119dp"
+
+            android:layout_marginTop="13dp"
+            android:layout_toRightOf="@id/divider_economy"
+            android:background="@color/divider_gardening" />
+
+        <View
+            android:id="@+id/divider_garden"
+            android:layout_width="111dp"
+            android:layout_height="10dp"
+            android:layout_alignParentBottom="true"
+
+            android:layout_marginLeft="0dp"
+
+            android:layout_marginTop="13dp"
+            android:layout_toRightOf="@id/divider_economy"
+            android:background="@color/divider_farming" />
+
+        <TextView
+            android:id="@+id/tveconomy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/divider_economy"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="13dp"
+            android:layout_marginStart="18dp"
+            android:text="Economy"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvfarming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/divider_farming"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="18dp"
+            android:text="Regional"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvgarden"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/divider_farming"
+            android:layout_marginStart="14dp"
+            android:layout_toEndOf="@+id/divider_garden"
+            android:text="Home Garden"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</RelativeLayout>

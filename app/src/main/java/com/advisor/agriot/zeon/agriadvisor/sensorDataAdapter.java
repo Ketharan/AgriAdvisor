@@ -4,6 +4,8 @@ package com.advisor.agriot.zeon.agriadvisor;
  * Created by Haran on 20/07/2017.
  */
 
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,17 +19,17 @@ public class sensorDataAdapter extends RecyclerView.Adapter<sensorDataAdapter.My
 
     private ArrayList<dataModel> dataSet;
 
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewName;
-        TextView textViewVersion;
         ImageView imageViewIcon;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             this.textViewName = (TextView) itemView.findViewById(R.id.textViewName);
-            this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
             this.imageViewIcon = (ImageView) itemView.findViewById(R.id.imageView);
+
         }
     }
 
@@ -38,28 +40,37 @@ public class sensorDataAdapter extends RecyclerView.Adapter<sensorDataAdapter.My
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent,
                                            int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cards_layout, parent, false);
 
-<<<<<<< HEAD
-        view.setOnClickListener(DeviceDataActivity.myOnClickListener);
-=======
-        //view.setOnClickListener(agriotMain.myOnClickListener);
->>>>>>> bf594fb58331886b6049d16fc58380bfe443b71f
 
-        MyViewHolder myViewHolder = new MyViewHolder(view);
-        return myViewHolder;
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.cards_layout, parent, false);
+            MyViewHolder myViewHolder = new MyViewHolder(view);
+
+            return myViewHolder;
+
+
+
+
+
+
+        //view.setOnClickListener(sensorData.myOnClickListener);
+
+        //view.setOnClickListener(DeviceDataActivity.myOnClickListener);
+
+
+
+
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
 
         TextView textViewName = holder.textViewName;
-        TextView textViewVersion = holder.textViewVersion;
+
         ImageView imageView = holder.imageViewIcon;
 
         textViewName.setText(dataSet.get(listPosition).getName());
-        textViewVersion.setText(dataSet.get(listPosition).getVersion());
+
         imageView.setImageResource(dataSet.get(listPosition).getImage());
     }
 

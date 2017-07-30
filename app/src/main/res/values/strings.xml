@@ -50,5 +50,8 @@
     <string name="mydevice">My Devices</string>
 
     <string name="devicename">Device Name</string>
+    <string name="battery_instructon">Keep the device in an open area for uninterrupted service.</string>
+    <string name="title_activity_crop_details">cropDetails</string>
+    <string name="info">Tune in for sensor data for efficient land preparation </string>
 
 </resources>

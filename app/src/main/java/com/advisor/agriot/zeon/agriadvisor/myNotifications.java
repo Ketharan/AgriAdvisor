@@ -5,7 +5,7 @@ package com.advisor.agriot.zeon.agriadvisor;
  */
 
 public class myNotifications {
-    static String[] notificationArray = {"Hi, Welcome to agri Advisor","Buy agriot sensor for more Accurate services"};
-    static Integer[] imageArray = {R.drawable.crop_selection, R.drawable.irrigation};
-    static Integer[] idArray = {0,1};
+    static String[] notificationArray = {"Hi, Welcome to agri Advisor","Click here for get suitable crops for "};
+    static Integer[] imageArray = {R.drawable.general,R.drawable.crop_selection, R.drawable.irrigation};
+    static Integer[] idArray = {0,1,2};
 }

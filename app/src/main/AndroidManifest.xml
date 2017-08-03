@@ -23,15 +23,19 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".hspotConnect"
-            android:label="@string/app_name">
+            android:label="@string/add_device">
             android:parentActivityName = "com.advisor.agriot.zeon.agriadvisor.MainActivity" >
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.advisor.agriot.zeon.agriadvisor.MainActivity" />
         </activity>
-        <activity android:name=".confiqureDevice" />
-        <activity android:name=".sensorData" />
+        <activity
+            android:name=".confiqureDevice"
+            android:label="@string/confiqure_device" />
+        <activity
+            android:name=".sensorData"
+            android:label="FIELD DATA" />
         <activity android:name=".SignupActvity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,17 +45,27 @@
         </activity>
         <activity android:name=".mainWindow" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".UserProfile" />
+        <activity
+            android:name=".UserProfile"
+            android:label="USER PROFILE" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main"
+            android:label="@string/home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TestActivity" />
         <activity android:name=".EditUserProfileActivity" />
         <activity android:name=".MydevicesActivitty" />
-        <activity android:name=".DeviceDataActivity" />
-        <activity android:name=".cropSuitability" />
-        <activity android:name=".cropsDetails"></activity>
+        <activity
+            android:name=".cropSuitability"
+            android:label="@string/crop_suitability" />
+        <activity
+            android:name=".cropSelect"
+            android:label="@string/crop_details" />
+        <activity android:name=".exactConnect" />
+        <activity
+            android:name=".store"
+            android:label="@string/agri_stock" />
+        <activity android:name=".currentCrops"></activity>
     </application>
 
 </manifest>

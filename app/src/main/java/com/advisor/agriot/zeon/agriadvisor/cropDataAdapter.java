@@ -17,7 +17,7 @@ public class cropDataAdapter extends RecyclerView.Adapter<cropDataAdapter.MyView
 
     private ArrayList<crop> crop;
     static int counter = 0;
-    static Integer[] typeArray = {0,1,2,3,4,5,6,7};
+    static ArrayList<Integer> typeArray = new ArrayList<Integer>();
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -50,7 +50,7 @@ public class cropDataAdapter extends RecyclerView.Adapter<cropDataAdapter.MyView
 
         myViewHolder = new MyViewHolder(view);
 
-        if (cropDataAdapter.typeArray[cropDataAdapter.counter]== 0 ) {
+        if (cropDataAdapter.typeArray.get(cropDataAdapter.counter)== 1 ) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.cart_crop_g1, parent, false);
 
@@ -59,14 +59,14 @@ public class cropDataAdapter extends RecyclerView.Adapter<cropDataAdapter.MyView
             view.setOnClickListener(cropSuitability.myOnClickListener);
             return myViewHolder;
 
-        }else if (cropDataAdapter.typeArray[cropDataAdapter.counter]== 1) {
+        }else if (cropDataAdapter.typeArray.get(cropDataAdapter.counter)== 2) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.carts_crop_g2, parent, false);
             myViewHolder = new MyViewHolder(view);
             cropDataAdapter.counter++;
             view.setOnClickListener(cropSuitability.myOnClickListener);
             return myViewHolder;
-        }else if (cropDataAdapter.typeArray[cropDataAdapter.counter]== 2) {
+        }else if (cropDataAdapter.typeArray.get(cropDataAdapter.counter)== 3) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.carts_crop_g3, parent, false);
             myViewHolder = new MyViewHolder(view);

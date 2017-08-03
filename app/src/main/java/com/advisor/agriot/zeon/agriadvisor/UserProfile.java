@@ -209,6 +209,8 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
             String city=textcity.getText().toString().trim();
             String province=textprovince.getText().toString().trim();
             gpsGetter.LocationResult locationResult;
+            FirebaseUser user=auth.getCurrentUser();
+
 
 
 
@@ -226,6 +228,7 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
                 postDataParams.put("province",province);
                 postDataParams.put("latitude", latitude);
                 postDataParams.put("longtitude", longtitude);
+                postDataParams.put("uid", user.getUid());
 
             } catch (Exception e) {
                 //String("Exception: " + e.getMessage());
@@ -240,7 +243,7 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
 
             try {
 
-                URL url = new URL("http://35.187.239.118/Agriot/cropSelection/index.php");
+                URL url = new URL("http://35.187.239.118/Agriot/initiate/index.php");
 
 //                JSONObject postDataParams = new JSONObject();
 //
@@ -297,9 +300,9 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
 
         @Override
         protected void onPostExecute(String result) {
-            //Context context = getApplicationC
-            //Toast.makeText(getApplicationContext(), result,
-            //Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "profile updated",
+                    Toast.LENGTH_LONG).show();
+            startActivity(new Intent(UserProfile.this,MainActivity.class));
 
         }
 

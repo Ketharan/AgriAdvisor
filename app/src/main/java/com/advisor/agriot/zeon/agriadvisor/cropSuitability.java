@@ -90,7 +90,7 @@ public class cropSuitability extends AppCompatActivity {
 //               ArrayList<String> KEY =new ArrayList<String>();
 //               ArrayList<String > DATA =new ArrayList<String>();
                 Log.d("Hello", "datashot");
-                int i = 0;
+
                 data = new ArrayList<crop>();
                 for (DataSnapshot child : datashot) {
 
@@ -108,7 +108,8 @@ public class cropSuitability extends AppCompatActivity {
                             crop,
                             cropData.drawableArray[drawableIndex]
                     ));
-                    cropDataAdapter.typeArray[i] = Integer.valueOf(group);
+                    cropDataAdapter.typeArray.add(Integer.valueOf(group));
+                    
 
                     removedItems = new ArrayList<Integer>();
 
@@ -134,6 +135,9 @@ public class cropSuitability extends AppCompatActivity {
 
         private class MyOnClickListener implements View.OnClickListener {
 
+
+
+
             private final Context context;
 
             private MyOnClickListener(Context context) {
@@ -142,7 +146,15 @@ public class cropSuitability extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(cropSuitability.this, cropsDetails.class));
+                int selectedItemPosition = recyclerView.getChildPosition(v);
+                RecyclerView.ViewHolder viewHolder
+                        = recyclerView.findViewHolderForPosition(selectedItemPosition);
+                TextView textViewName
+                        = (TextView) viewHolder.itemView.findViewById(R.id.textViewName);
+                String cropName = (String) textViewName.getText();
+                Intent intent = new Intent(cropSuitability.this,cropSelect.class);
+                intent.putExtra("crop",cropName);
+                startActivity(intent);
             }
 
 

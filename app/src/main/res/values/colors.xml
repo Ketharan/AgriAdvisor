@@ -6,7 +6,7 @@
 
 	<color name="green">#47A64A</color>
     <color name="color_white">#fefefe</color>
-    <color name="green_header">#1AA620</color>
+    <color name="green_header">#3ee045</color>
 
 
 
@@ -39,6 +39,11 @@
     <color name = "divider_economy"> #FFE084   </color>
     <color name = "divider_farming"> #B3E5FC </color>
     <color name = "divider_gardening"> #AED581 </color>
+
+    <color name = "general"> #FFAB91 </color>
+    <color name = "fertilizer"> #4DD0E1 </color>
+
+    <color name = "pesticide"> #B3E5FC </color>
 
 
 

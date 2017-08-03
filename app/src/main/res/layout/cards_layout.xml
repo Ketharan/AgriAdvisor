@@ -25,23 +25,27 @@
             >
 
             <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView"
+                android:layout_alignParentBottom="false"
                 android:layout_alignParentLeft="true"
+                android:layout_marginLeft="40dp"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="3dp"
-                android:layout_marginRight="16dp"
-                />
+
+                android:layout_marginTop="3dp" />
 
             <TextView
+                android:id="@+id/textViewName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewName"
-                android:layout_toRightOf="@+id/imageView"
                 android:layout_centerInParent="true"
-                android:textSize="18sp"
-                />
+
+                android:layout_toRightOf="@+id/imageView"
+                android:layout_marginLeft="100dp"
+                android:foregroundGravity="center"
+                android:gravity="center"
+                android:textSize="25sp" />
 
         </RelativeLayout>
 

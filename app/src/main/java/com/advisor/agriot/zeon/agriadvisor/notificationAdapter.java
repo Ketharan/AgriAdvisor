@@ -50,27 +50,22 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
         view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cards_layout_main, parent, false);
 
-        myViewHolder = new MyViewHolder(view);
+
         if (notificationAdapter.typeArray[notificationAdapter.counter]== 0 ) {
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.cards_layout_main, parent, false);
+                    .inflate(R.layout.general, parent, false);
 
-            myViewHolder = new MyViewHolder(view);
-            notificationAdapter.counter++;
-            view.setOnClickListener(MainActivity.notificationlistener);
-            return myViewHolder;
+
 
         }else if (notificationAdapter.typeArray[notificationAdapter.counter]== 1) {
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.irrigation, parent, false);
-            myViewHolder = new MyViewHolder(view);
-            notificationAdapter.counter++;
-            view.setOnClickListener(MainActivity.notificationlistener);
+                    .inflate(R.layout.cards_layout_main, parent, false);
 
-            return myViewHolder;
+
+
         }else if (notificationAdapter.typeArray[notificationAdapter.counter]== 2) {
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.cards_layout_main, parent, false);
+                    .inflate(R.layout.irrigation, parent, false);
             notificationAdapter.counter++;
         }else if (notificationAdapter.typeArray[notificationAdapter.counter]== 3) {
             view = LayoutInflater.from(parent.getContext())
@@ -95,9 +90,12 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
         }else{
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.cards_layout_main, parent, false);
-            notificationAdapter.counter++;
+
         }
 
+        myViewHolder = new MyViewHolder(view);
+        notificationAdapter.counter++;
+        view.setOnClickListener(MainActivity.notificationlistener);
         return myViewHolder;
 
 

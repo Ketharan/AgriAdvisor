@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginLeft="5dp"
-                android:text="Agri Advisor"
+                android:text="HOME"
                 android:textColor="@color/cardview_light_background"
                 android:textSize="25sp"
                  />
@@ -39,14 +39,16 @@
     <include layout="@layout/content_main"
         android:id="@+id/include" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/imgFab"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignBottom="@+id/add_device"
+
+        android:layout_alignEnd="@+id/username"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:padding="1dp"
-        app:backgroundTint="@color/button_theme_color"
+        android:layout_margin="8dp"
+
         app:srcCompat="@drawable/fab" />
 
 

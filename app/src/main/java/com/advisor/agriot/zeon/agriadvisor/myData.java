@@ -11,7 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
  * Created by Haran on 20/07/2017.
  */
 
-public class    myData {
+public class myData {
 
 
 

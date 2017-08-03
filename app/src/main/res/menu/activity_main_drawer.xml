@@ -3,21 +3,21 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_person_black_24dp"
-            android:title="Import" />
+            android:id="@+id/field_data"
+            android:icon="@drawable/field_data"
+            android:title="Field data" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/suitable_crop"
+            android:icon="@drawable/crop_suitability"
+            android:title="Suitable crop" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/current_crop"
+            android:icon="@drawable/current_crops"
+            android:title="Current crop" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/go_to_store"
+            android:icon="@drawable/go_to_store"
+            android:title="Go to store" />
     </group>
 
     <item android:title="Device">
@@ -32,7 +32,7 @@
                 android:title="Add Device" />
         </menu>
     </item>
-    <item android:title="Accout">
+    <item android:title="Account">
         <menu>
             <item
                 android:id="@+id/nav_profile"

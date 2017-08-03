@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
@@ -40,6 +41,20 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Iterator;
+
+import javax.net.ssl.HttpsURLConnection;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener{
@@ -68,14 +83,20 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference databaseReference;
     private FirebaseUser user;
 
+    private String agroZone;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
 
-        ////recycler view for notification
+        //recycler view for notification
         notificationlistener = new notificationListener(getParent());
         recyclerView = (RecyclerView) findViewById(R.id.rv);
 
@@ -86,8 +107,8 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
-        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+
 
 
         databaseReference= firebaseDatabase.getReference();
@@ -100,12 +121,27 @@ public class MainActivity extends AppCompatActivity
         auth = FirebaseAuth.getInstance();
         user=auth.getCurrentUser();
         final TextView username =(TextView) findViewById(R.id.username);
-        DatabaseReference name =  databaseReference.child(user.getUid()).child("firstname");
+        DatabaseReference name =  databaseReference.child(user.getUid()).child("userDetails").child("firstName");
         name.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.getValue(String.class);
                 username.setText("Hi," + name);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+
+        DatabaseReference ref =  databaseReference.child(user.getUid()).child("userDetails").child("agroZone");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                agroZone = dataSnapshot.getValue(String.class);
+
             }
 
             @Override
@@ -129,7 +165,7 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        });
 
-       databaseReference.child(user.getUid()).child("notifications").addValueEventListener(new ValueEventListener() {
+       databaseReference.child(user.getUid()).child("notification").addValueEventListener(new ValueEventListener() {
            @Override
            public void onDataChange(DataSnapshot dataSnapshot) {
                Iterable<DataSnapshot> datashot= dataSnapshot.getChildren();
@@ -149,7 +185,7 @@ public class MainActivity extends AppCompatActivity
                    data.add(new notification(datas,myNotifications.imageArray[Integer.valueOf(key)],Integer.valueOf(key)));
 
                    notificationAdapter.typeArray[i] = Integer.valueOf(key);
-                   i=+1;
+                   i+=1;
                }
                removedItems = new ArrayList<Integer>();
 //
@@ -225,6 +261,7 @@ public class MainActivity extends AppCompatActivity
         myOnClickListener = new MyOnClickListener(this);
 
         recyclerViewMini = (RecyclerView) findViewById(R.id.rvbtnviewdevice);
+
 
 
 //        check whether a device already added add_device
@@ -369,6 +406,129 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    //here the code for posting for cropSuitability goes on
+    public class SendRequest extends AsyncTask<String, Void, String> {
+        JSONObject postDataParams = new JSONObject();
+        protected void onPreExecute() {
+
+
+
+
+
+
+
+            try {
+
+                String uid = auth.getCurrentUser().getUid();
+                postDataParams.put("save", "ok");
+                postDataParams.put("uid", uid);
+                postDataParams.put("agroZone", agroZone);
+
+
+            } catch (Exception e) {
+                //String("Exception: " + e.getMessage());
+            }
+        }
+
+        public void setParams(){
+
+        }
+
+        protected String doInBackground(String... arg0) {
+
+            try {
+
+                URL url = new URL("http://35.187.239.118/Agriot/cropSuitability/index.php");
+
+//                JSONObject postDataParams = new JSONObject();
+//
+//
+//
+//                postDataParams.put("save", textcity.getText().toString().trim());
+//                postDataParams.put("zone", "100");
+//                postDataParams.put("season", "abc");
+//                postDataParams.put("group", "100");
+//                postDataParams.put("crop", "ketha");
+
+                Log.e("params", postDataParams.toString());
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(15000 /* milliseconds */);
+                conn.setConnectTimeout(15000 /* milliseconds */);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
+
+                writer.flush();
+                writer.close();
+                os.close();
+
+                int responseCode = conn.getResponseCode();
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuffer sb = new StringBuffer("");
+                    String line = "";
+
+                    while ((line = in.readLine()) != null) {
+
+                        sb.append(line);
+                        break;
+                    }
+
+                    in.close();
+                    return sb.toString();
+
+                } else {
+                    return new String("false : " + responseCode);
+                }
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+//            Toast.makeText(getApplicationContext(), result,
+//            Toast.LENGTH_LONG).show();
+
+        }
+
+
+        public String getPostDataString(JSONObject params) throws Exception {
+
+            StringBuilder result = new StringBuilder();
+            boolean first = true;
+
+            Iterator<String> itr = params.keys();
+
+            while (itr.hasNext()) {
+
+                String key = itr.next();
+                Object value = params.get(key);
+
+                if (first)
+                    first = false;
+                else
+                    result.append("&");
+
+                result.append(URLEncoder.encode(key, "UTF-8"));
+                result.append("=");
+                result.append(URLEncoder.encode(value.toString(), "UTF-8"));
+
+            }
+            return result.toString();
+        }
+    }
+
+
 
 
     //click listener for notifications
@@ -389,8 +549,26 @@ public class MainActivity extends AppCompatActivity
                     = (TextView) viewHolder.itemView.findViewById(R.id.textIndicator);
             String indicator = (String) textViewName.getText();
             int inTindicator = Integer.valueOf(indicator);
-            if (inTindicator == 0){
-                startActivity(new Intent(MainActivity.this,cropSuitability.class));
+            if (inTindicator == 1){
+
+                databaseReference.child(user.getUid()).addValueEventListener( new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild("suitableCrops")){
+                            startActivity(new Intent(MainActivity.this,cropSuitability.class));
+                        }else {
+                            new SendRequest().execute();
+                            //startActivity(new Intent(MainActivity.this,cropSuitability.class));
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         }
 
@@ -442,25 +620,27 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         FragmentManager fragmentManager=getFragmentManager();
 
-        if (id == R.id.nav_camera) {
-            Toast.makeText(getApplicationContext(),"Camera Successfly",Toast.LENGTH_SHORT).show();
+        if (id == R.id.go_to_store) {
+            finish();
+            startActivity(new Intent(getApplicationContext(),store.class));
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.current_crop) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.suitable_crop) {
+            finish();
+            startActivity(new Intent(getApplicationContext(),cropSuitability.class));
+        } else if (id == R.id.field_data) {
+            finish();
+            startActivity(new Intent(getApplicationContext(),sensorData.class));
 
         } else if (id == R.id.nav_mydevices) {
             finish();
-            startActivity(new Intent(getApplicationContext(),MydevicesActivitty.class));
+            startActivity(new Intent(getApplicationContext(),sensorData.class));
 
         } else if (id == R.id.nav_adddevice) {
             finish();
-//            Intent intent=new Intent(getApplicationContext(),DeviceDataActivity.class);
-//            String device="device1";
-//            intent.putExtra("keydevice",device);
-//            startActivity(intent);
+            Intent intent = new Intent(getApplicationContext(),hspotConnect.class);
+
         }
         else if (id == R.id.nav_profile){
             finish();

@@ -48,7 +48,7 @@ public class sensorData extends AppCompatActivity implements android.view.View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
         setContentView(R.layout.sensor_data);
 
 

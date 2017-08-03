@@ -3,10 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:padding="5dp"
+
     tools:context=".sensorData"
 
     >
@@ -38,7 +36,8 @@
             android:layout_below="@+id/device"
             android:layout_centerInParent="true"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
             android:text="Device 1"
             android:textStyle="bold"/>
 
@@ -50,8 +49,8 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
 
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
             android:paddingTop="4dp"
             android:text="Last Sync"
             android:textAlignment="gravity"
@@ -66,9 +65,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_alignEnd="@+id/lsync"
+            android:layout_alignParentEnd="true"
             android:layout_below="@+id/lsync"
-            android:layout_marginTop="5dp"
+            android:layout_marginRight="23dp"
+            android:layout_marginTop="2dp"
             android:text="2 hours ago."
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -77,8 +77,8 @@
             android:id="@+id/last_sync"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
 
-            android:layout_marginLeft="10dp"
             android:layout_marginRight="8dp"
             android:layout_toStartOf="@+id/lsync"
             app:srcCompat="@drawable/sync" />
@@ -89,19 +89,21 @@
             android:layout_height="wrap_content"
             app:srcCompat="@android:drawable/presence_online"
             android:layout_below="@+id/time"
-            android:layout_marginTop="13dp"
-            android:layout_toStartOf="@+id/onlinetxt"
+            android:layout_marginTop="15dp"
 
+            android:layout_toStartOf="@+id/onlinetxt"
+            android:layout_marginRight="4dp"
              />
 
         <TextView
             android:id="@+id/onlinetxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/time"
+            android:layout_alignParentEnd="true"
             android:layout_below="@+id/time"
+            android:paddingBottom="6dp"
             android:layout_marginTop="8dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="23dp"
             android:text="online"
 
 
@@ -116,8 +118,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="111dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginBottom="107dp"
+        android:layout_marginTop="119dp"
         android:paddingBottom="5dp"
         android:paddingTop ="5dp"
         android:background="@drawable/border"
@@ -129,7 +131,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="380dp"
+        android:layout_marginTop="397dp"
         android:background="@drawable/border">
 
         <ImageView

@@ -6,10 +6,10 @@ package com.advisor.agriot.zeon.agriadvisor;
 
 public class cropData {
     static String[] selectArray = {"peanuts","tomato","avocado"};
-    static String[] cropArray = {"beans","peanuts","spring onion","soya","tomato","avocado"};
-    static Integer[] cropGroup = {0,1,2};
+    static String[] cropArray = {"Brinjal","Green Chili","Sweet potato","cassava","cucurbits","kiri ala","rice"};
+    static Integer[] cropGroup = {1,2,3};
 
 
-    static Integer[] drawableArray = {R.drawable.temperature, R.drawable.peanuts, R.drawable.light,
-            R.drawable.moisture,R.drawable.tomato,R.drawable.avocado};
+    static Integer[] drawableArray = {R.drawable.brinjal, R.drawable.green_chili, R.drawable.sweet_potato,
+            R.drawable.cassava,R.drawable.cucurbits,R.drawable.kiri_ala,R.drawable.rice};
 }

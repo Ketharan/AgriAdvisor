@@ -1,117 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp">
+    android:padding="4dp">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/carts_view_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/carts_view_main"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/border"
         android:padding="3dp"
         app:cardBackgroundColor="@color/crop_selection">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="3dp"
-            >
-            <LinearLayout
+            android:padding="3dp">
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentLeft="true"
+                android:padding="3dp"
+                android:text="Btn" />
+
+            <TextView
+                android:id="@+id/txtCrop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="4"
-                android:id="@+id/storecropselectionfirstlayout">
+                android:layout_toRightOf="@+id/imageView"
+                android:paddingLeft="10dp"
+                android:text="Rice"
+                android:textSize="20sp" />
 
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:text="Btn" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/txtCrop"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Rice"
-                        android:textSize="25dp" />
-
-                    <TextView
-                        android:id="@+id/txtName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:text="Lanka Sour (Goraka Takkau)"
-                        android:textSize="15dp"
-                        android:textStyle="italic" />
-
-                    <TextView
-                        android:id="@+id/txtDescribtion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Olungatota Farms"
-                        android:textColor="#000000"
-                        android:textSize="15dp" />
-
-
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_below="@+id/txtCrop"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/imageView"
+                android:paddingLeft="8dp"
+                android:text="Lanka Sour (Goraka Takkau)"
+                android:textAllCaps="true"
+                android:textSize="15dp"
+                android:textStyle="italic" />
 
-                android:layout_below="@+id/storecropselectionfirstlayout"
-                android:weightSum="4">
+            <TextView
+                android:id="@+id/txtDescribtion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtName"
+                android:layout_toRightOf="@+id/imageView"
+                android:paddingLeft="10dp"
+                android:text="Olungatota Farms"
+                android:textAllCaps="true"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:textStyle="italic" />
 
-                <RatingBar
+            <RatingBar
 
-                    android:id="@+id/barRating"
-                    style="@style/foodRatingBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:isIndicator="false"
-                    android:numStars="5"
-                    android:rating="3" />
-                <TextView
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="4" />
+                android:id="@+id/barRating"
+                style="@style/foodRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/imageView"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="7dp"
+                android:isIndicator="false"
+                android:numStars="5"
+                android:rating="3" />
 
-                <Button
+            <Button
 
-                    android:layout_width="102dp"
-                    android:layout_height="38dp"
+                android:id="@+id/button7"
+                android:layout_width="82dp"
 
-                    android:layout_gravity="right"
-                    android:background="#9CCC65"
-                    android:drawableLeft="@drawable/ic_local_grocery_store_black_24dp"
-                    android:gravity="left"
-                    android:padding="10dp"
-                    android:text="Order"
-                    android:textColor="#000000" />
+                android:layout_height="30dp"
 
-
-            </LinearLayout>
-
-
-
+                android:layout_alignBottom="@+id/barRating"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/txtName"
+                android:layout_gravity="right"
+                android:layout_marginTop="22dp"
+                android:background="#9CCC65"
+                android:drawableLeft="@drawable/ic_local_grocery_store_black_24dp"
+                android:text="Order"
+                android:textColor="#000000" />
 
 
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 
-</LinearLayout>
+</RelativeLayout>

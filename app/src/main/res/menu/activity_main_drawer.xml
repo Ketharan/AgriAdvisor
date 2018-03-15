@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
         <item
@@ -18,20 +19,35 @@
             android:id="@+id/go_to_store"
             android:icon="@drawable/go_to_store"
             android:title="Go to store" />
+        <item
+            android:id="@+id/pest_control"
+            android:icon="@drawable/pest_control"
+            android:title="Pest control" />
+        <item
+            android:id="@+id/feedback"
+            android:icon="@drawable/feedback"
+            android:title="Feedback" />
     </group>
 
-    <item android:title="Device">
+
+    <item android:title="Language">
         <menu>
             <item
-                android:id="@+id/nav_mydevices"
-                android:icon="@drawable/ic_remove_from_queue_black_24dp"
-                android:title="My Devices" />
+                android:id="@+id/tamil"
+                android:icon="@drawable/tamil"
+                android:title="Tamil" />
             <item
-                android:id="@+id/nav_adddevice"
-                android:icon="@drawable/ic_add_to_queue_black_24dp"
-                android:title="Add Device" />
+                android:id="@+id/english"
+                android:icon="@drawable/english"
+                android:title="English" />
+            <item
+                android:id="@+id/sinhala"
+                android:icon="@drawable/sinhala"
+                android:title="Sinhala" />
         </menu>
     </item>
+
+
     <item android:title="Account">
         <menu>
             <item

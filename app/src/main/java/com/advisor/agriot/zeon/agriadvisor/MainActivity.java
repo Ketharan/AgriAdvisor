@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ReceiverCallNotAllowedException;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -15,6 +17,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -38,6 +41,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -61,11 +65,13 @@ public class MainActivity extends AppCompatActivity
 
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private static RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private static ArrayList<notification> data;
     static View.OnClickListener notificationlistener;
     private static ArrayList<Integer> removedItems;
 
+
+    private translator trans;
 
     //mini sensor dara
     private static RecyclerView.Adapter adapterMini;
@@ -73,6 +79,7 @@ public class MainActivity extends AppCompatActivity
     private static RecyclerView recyclerViewMini;
     private static ArrayList<dataModel> dataMini;
 
+    static passAssert ass;
     static View.OnClickListener myOnClickListener;
     private static ArrayList<Integer> removedItemsMini;
     private ArrayList<String> KEY ;
@@ -84,20 +91,37 @@ public class MainActivity extends AppCompatActivity
     private FirebaseUser user;
 
     private String agroZone;
+    private String userIdd;
+    public double longtitude;
+    public double latitude;
+
+    private  String language;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        language = "1";
         //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase.setPersistenceEnabled(true);
+
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        Bundle extras = getIntent().getExtras();
+        if(extras !=null) {
+            latitude = extras.getDouble("latitude");
+            longtitude = extras.getDouble("longtitude");
+            userIdd = extras.getString("uid");
+            new setZone().execute();
+        }
+
 
         //recycler view for notification
         notificationlistener = new notificationListener(getParent());
+
         recyclerView = (RecyclerView) findViewById(R.id.rv);
 
         recyclerView.setHasFixedSize(true);
@@ -121,6 +145,26 @@ public class MainActivity extends AppCompatActivity
         auth = FirebaseAuth.getInstance();
         user=auth.getCurrentUser();
         final TextView username =(TextView) findViewById(R.id.username);
+
+        DatabaseReference lang =  databaseReference.child(user.getUid()).child("userDetails").child("lang");
+        lang.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                language = "1";
+                Log.d("language",language);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+
+
+        ass = new passAssert(language);
+
+
         DatabaseReference name =  databaseReference.child(user.getUid()).child("userDetails").child("firstName");
         name.addValueEventListener(new ValueEventListener() {
             @Override
@@ -165,89 +209,75 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        });
 
-       databaseReference.child(user.getUid()).child("notification").addValueEventListener(new ValueEventListener() {
-           @Override
-           public void onDataChange(DataSnapshot dataSnapshot) {
-               Iterable<DataSnapshot> datashot= dataSnapshot.getChildren();
-
-//               ArrayList<String> KEY =new ArrayList<String>();
-//               ArrayList<String > DATA =new ArrayList<String>();
-               Log.d("Hello","datashot");
-               int i = 0;
-               data = new ArrayList<notification>();
-               for(DataSnapshot child:datashot){
-
-                   String key=child.getKey();
-                   String datas=child.getValue().toString();
 
 
+        //calling for translator
 
-                   data.add(new notification(datas,myNotifications.imageArray[Integer.valueOf(key)],Integer.valueOf(key)));
 
-                   notificationAdapter.typeArray[i] = Integer.valueOf(key);
-                   i+=1;
-               }
-               removedItems = new ArrayList<Integer>();
+        trans = new translator();
+        trans.execute();
+//       databaseReference.child(user.getUid()).child("notification").addValueEventListener(new ValueEventListener() {
+//           @Override
+//           public void onDataChange(DataSnapshot dataSnapshot) {
+//               Iterable<DataSnapshot> datashot= dataSnapshot.getChildren();
 //
-               adapter = new notificationAdapter(data);
-               recyclerView.setAdapter(adapter);
-
-
-
-           }
-
-           @Override
-           public void onCancelled(DatabaseError databaseError) {
-
-           }
-       });
-
-
-
-
-//        String[] Datastring =new String[DATA.size()];
-//        for(int j=0;j<DATA.size();j++){
-//            Datastring[j]=DATA.get(j+1);
-//        }
-//        String[] Keystring =new String[KEY.size()];
-//        for(int j=0;j<KEY.size();j++){
-//            Datastring[j]=KEY.get(j+1);
-//        }
-//        Log.d("and",Datastring[0]);
-//        Log.d("aaaand",Keystring[1]);
-
-
-//        for (int i = 0; i < myNotifications.notificationArray.length; i++) {
-//            data.add(new notification(DATA.get(i+1),myNotifications.imageArray[i],Integer.valueOf(KEY.get(i+1))
-//            ));
-//            notificationAdapter.typeArray[i] = myNotifications.idArray[i];
+////               ArrayList<String> KEY =new ArrayList<String>();
+////               ArrayList<String > DATA =new ArrayList<String>();
+//               Log.d("Hello","datashot");
+//               int i = 0;
+//               data = new ArrayList<notification>();
+//               for(DataSnapshot child:datashot){
 //
-//        }
+//                   String key=child.getKey();
+//                   String datas=child.getValue().toString();
 //
-//        removedItems = new ArrayList<Integer>();
+//
+//
+//                   data.add(new notification(datas,myNotifications.imageArray[Integer.valueOf(key)],Integer.valueOf(key)));
+//
+//                   notificationAdapter.typeArray[i] = Integer.valueOf(key);
+//                   i+=1;
+//               }
+//               removedItems = new ArrayList<Integer>();
 ////
-//        adapter = new notificationAdapter(data);
-//        recyclerView.setAdapter(adapter);
-
-
-
-
-
-
-       // setSupportActionBar(toolbar);
+//               adapter = new notificationAdapter(data);
+//               recyclerView.setAdapter(adapter);
 //
-
-
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+//           }
 //
+//           @Override
+//           public void onCancelled(DatabaseError databaseError) {
+//
+//           }
+//
+//
+//       });
+
+
+//        int childCount = recyclerView.getAdapter().getItemCount();
+//        Typeface tamilFont = Typeface.createFromAsset(getAssets(),"fonts/baamini.ttf");
+//        RecyclerView.ViewHolder viewHolder;
+//        for (int j=0;j < childCount;j++){
+//            viewHolder
+//                    = recyclerView.findViewHolderForPosition(j);
+//
+//            TextView textNotification = (TextView) viewHolder.itemView.findViewById(R.id.notification);
+//
+//            textNotification.setTypeface(tamilFont);
+//
+//
+//
+//        }
+
+
+        ImageView fab = (ImageView) findViewById(R.id.imgFab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),contact.class));
+            }
+        });
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -308,86 +338,120 @@ public class MainActivity extends AppCompatActivity
         recyclerViewMini.setItemAnimator(new DefaultItemAnimator());
 
 
-        //firebase commectivity for minisensor data
-        databaseReference.child(user.getUid()).child("device").addValueEventListener(new ValueEventListener() {
-            String[] devicedata = new String[5];
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-
-                for (DataSnapshot innerNode : dataSnapshot.getChildren()) {
-                    deviceNode devicenode = innerNode.getValue(deviceNode.class);
-                    DeviceData deviceData = devicenode.data;
-
-                    devicedata[0] = deviceData.temperature;
-                    devicedata[1] = deviceData.humidity;
-                    devicedata[2] = deviceData.light;
-                    devicedata[3] = deviceData.moisture;
-                    devicedata[4] = deviceData.ec;
-
-                }
-
-
-
-                dataMini = new ArrayList<dataModel>();
-                for (int j = 0; j < myData.nameArray.length; j++) {
-                    dataMini.add(new dataModel(
-                            devicedata[j],
-                            miniSensorData.versionArray[j],
-                            miniSensorData.id_[j],
-                            miniSensorData.drawableArray[j]
-                    ));
-                }
-                removedItemsMini = new ArrayList<Integer>();
-//
-                adapterMini = new miniSensorDataAdapter(dataMini);
-                recyclerViewMini.setAdapter(adapterMini);
-
-
-
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });
-
 
 
 
 
         //recycle view for mini sensor data
-//        myOnClickListener = new MyOnClickListener(this);
-//
-//        recyclerViewMini = (RecyclerView) findViewById(R.id.rvbtnviewdevice);
-//
-//        recyclerViewMini.setHasFixedSize(true);
-//
-//
-//        layoutManagerMini = new LinearLayoutManager(this);
-//        recyclerViewMini.setLayoutManager(layoutManagerMini);
-//        recyclerViewMini.setItemAnimator(new DefaultItemAnimator());
-//
-//        dataMini = new ArrayList<dataModel>();
-//        for (int j = 0; j < myData.nameArray.length; j++) {
-//            dataMini.add(new dataModel(
-//                    miniSensorData.nameArray[j],
-//                    miniSensorData.versionArray[j],
-//                    miniSensorData.id_[j],
-//                    miniSensorData.drawableArray[j]
-//            ));
-//        }
-//
-//        removedItemsMini = new ArrayList<Integer>();
-//
-//        adapterMini = new miniSensorDataAdapter(dataMini);
-//        recyclerViewMini.setAdapter(adapterMini);
+        myOnClickListener = new MyOnClickListener(this);
+
+        recyclerViewMini = (RecyclerView) findViewById(R.id.rvbtnviewdevice);
+
+        recyclerViewMini.setHasFixedSize(true);
+
+
+        layoutManagerMini = new LinearLayoutManager(this);
+        recyclerViewMini.setLayoutManager(layoutManagerMini);
+        recyclerViewMini.setItemAnimator(new DefaultItemAnimator());
+
+        dataMini = new ArrayList<dataModel>();
+        for (int j = 0; j < myData.nameArray.length; j++) {
+            dataMini.add(new dataModel(
+                    miniSensorData.nameArray[j],
+                    miniSensorData.versionArray[j],
+                    miniSensorData.id_[j],
+                    miniSensorData.drawableArray[j]
+            ));
+        }
+
+        removedItemsMini = new ArrayList<Integer>();
+
+        adapterMini = new miniSensorDataAdapter(dataMini);
+        recyclerViewMini.setAdapter(adapterMini);
 
 
     }
+
+
+    //language menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.language_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+
+    //async task for translator
+    public class translator extends AsyncTask<String, Void, View> {
+
+        protected void onPreExecute() {
+        }
+
+        protected RecyclerView doInBackground(String... arg0) {
+            DatabaseReference ref = databaseReference.child(user.getUid()).child("notification");
+            if (language.equals("0")) {
+                ref = databaseReference.child(user.getUid()).child("tamilNotification");
+            }else if (language.equals("1")){
+                ref = databaseReference.child(user.getUid()).child("notification");
+            }else if(language.equals("2")){
+                ref = databaseReference.child(user.getUid()).child("sinhalaNotification");
+            }
+
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Iterable<DataSnapshot> datashot = dataSnapshot.getChildren();
+
+//               ArrayList<String> KEY =new ArrayList<String>();
+//               ArrayList<String > DATA =new ArrayList<String>();
+                    Log.d("Hello", "datashot");
+                    int i = 0;
+                    data = new ArrayList<notification>();
+                    for (DataSnapshot child : datashot) {
+
+                        String key = child.getKey();
+                        String datas = child.getValue().toString();
+
+
+                        data.add(new notification(datas, myNotifications.imageArray[Integer.valueOf(key)], Integer.valueOf(key)));
+
+                        notificationAdapter.typeArray[i] = Integer.valueOf(key);
+                        i += 1;
+                    }
+                    removedItems = new ArrayList<Integer>();
+//
+                    adapter = new notificationAdapter(data);
+                    recyclerView.setAdapter(adapter);
+
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+
+
+            });
+            return recyclerView;
+        }
+
+
+        @Override
+        protected void onPostExecute(View v) {
+            notificationAdapter.counter = 0;
+
+        }
+    }
+
+
+
+
+
+
 
     //click listener class for recyclerview
     private class MyOnClickListener implements View.OnClickListener {
@@ -406,16 +470,33 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    //passing context for adapter getAssert
+    public class passAssert{
+
+        private String languages;
+        private Typeface fontType;
+        private passAssert(String language){
+            this.languages = language;
+
+        }
+
+        public Typeface getFont(){
+            int langs = Integer.valueOf(language);
+            if (langs == 0){
+                fontType = Typeface.createFromAsset(getAssets(), "fonts/baamini.ttf");
+            }else if (langs == 1){
+                fontType = null;
+            }else if (langs == 2){
+                fontType = Typeface.createFromAsset(getAssets(), "fonts/baamini.ttf");
+            }else{fontType = null;}
+            return fontType;
+        }
+    }
+
     //here the code for posting for cropSuitability goes on
     public class SendRequest extends AsyncTask<String, Void, String> {
         JSONObject postDataParams = new JSONObject();
         protected void onPreExecute() {
-
-
-
-
-
-
 
             try {
 
@@ -547,11 +628,12 @@ public class MainActivity extends AppCompatActivity
                     = recyclerView.findViewHolderForPosition(selectedItemPosition);
             TextView textViewName
                     = (TextView) viewHolder.itemView.findViewById(R.id.textIndicator);
+
             String indicator = (String) textViewName.getText();
             int inTindicator = Integer.valueOf(indicator);
             if (inTindicator == 1){
 
-                databaseReference.child(user.getUid()).addValueEventListener( new ValueEventListener() {
+                databaseReference.child(user.getUid()).addListenerForSingleValueEvent( new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.hasChild("suitableCrops")){
@@ -569,11 +651,20 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
 
+            }else if(inTindicator==2){
+                startActivity(new Intent(MainActivity.this,cultivation.class));
+            }else if(inTindicator==3){
+                startActivity(new Intent(MainActivity.this,fertilizer.class));
+            }else if(inTindicator==5){
+                startActivity(new Intent(MainActivity.this,pesticide.class));
             }
         }
 
 
     }
+
+
+
 
     @Override
     public void onClick(View v){
@@ -591,12 +682,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -618,41 +704,162 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        FragmentManager fragmentManager=getFragmentManager();
+        FragmentManager fragmentManager  =  getFragmentManager();
 
         if (id == R.id.go_to_store) {
-            finish();
+
             startActivity(new Intent(getApplicationContext(),store.class));
             // Handle the camera action
         } else if (id == R.id.current_crop) {
-
+            startActivity(new Intent(getApplicationContext(),currentCrops.class));
         } else if (id == R.id.suitable_crop) {
-            finish();
+
             startActivity(new Intent(getApplicationContext(),cropSuitability.class));
         } else if (id == R.id.field_data) {
-            finish();
+
             startActivity(new Intent(getApplicationContext(),sensorData.class));
 
-        } else if (id == R.id.nav_mydevices) {
-            finish();
-            startActivity(new Intent(getApplicationContext(),sensorData.class));
+        }else if (id == R.id.nav_profile){
 
-        } else if (id == R.id.nav_adddevice) {
-            finish();
-            Intent intent = new Intent(getApplicationContext(),hspotConnect.class);
-
-        }
-        else if (id == R.id.nav_profile){
-            finish();
             startActivity(new Intent(getApplicationContext(),EditUserProfileActivity.class));
         }else if(id == R.id.nav_logout){
             auth.signOut();;
             finish();
             startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+        }else if(id == R.id.pest_control){
+            startActivity(new Intent(getApplicationContext(),pestInitial.class));
+        }else if(id == R.id.tamil){
+            language = "0";
+            new translator().execute();
+
+        }else if(id == R.id.english){
+            language = "1";
+            new translator().execute();
+        }else if(id == R.id.sinhala){
+            language = "2";
+            new translator().execute();
+        }else if(id == R.id.feedback){
+            startActivity(new Intent(getApplicationContext(),feedback.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+
+    public class setZone extends AsyncTask<String, Void, String> {
+        JSONObject postDataParams = new JSONObject();
+        protected void onPreExecute() {
+            try {
+                postDataParams.put("save", "ok");
+                postDataParams.put("latitude",latitude);
+                postDataParams.put("longtitude", longtitude);
+                postDataParams.put("uid", userIdd);
+
+            } catch (Exception e) {
+                //String("Exception: " + e.getMessage());
+            }
+        }
+
+        public void setParams(){
+
+        }
+
+        protected String doInBackground(String... arg0) {
+
+            try {
+
+                URL url = new URL("http://35.187.239.118/Agriot/Location/index.php");
+
+//                JSONObject postDataParams = new JSONObject();
+//
+//
+//
+//                postDataParams.put("save", textcity.getText().toString().trim());
+//                postDataParams.put("zone", "100");
+//                postDataParams.put("season", "abc");
+//                postDataParams.put("group", "100");
+//                postDataParams.put("crop", "ketha");
+
+                Log.e("params", postDataParams.toString());
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(15000 /* milliseconds */);
+                conn.setConnectTimeout(15000 /* milliseconds */);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
+
+                writer.flush();
+                writer.close();
+                os.close();
+
+                int responseCode = conn.getResponseCode();
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuffer sb = new StringBuffer("");
+                    String line = "";
+
+                    while ((line = in.readLine()) != null) {
+
+                        sb.append(line);
+                        break;
+                    }
+
+                    in.close();
+                    return sb.toString();
+
+                } else {
+                    return new String("false : " + responseCode);
+                }
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+//            Toast.makeText(getApplicationContext(), result,
+//                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Region Updated",
+                    Toast.LENGTH_LONG).show();
+
+
+        }
+
+
+        public String getPostDataString(JSONObject params) throws Exception {
+
+            StringBuilder result = new StringBuilder();
+            boolean first = true;
+
+            Iterator<String> itr = params.keys();
+
+            while (itr.hasNext()) {
+
+                String key = itr.next();
+                Object value = params.get(key);
+
+                if (first)
+                    first = false;
+                else
+                    result.append("&");
+
+                result.append(URLEncoder.encode(key, "UTF-8"));
+                result.append("=");
+                result.append(URLEncoder.encode(value.toString(), "UTF-8"));
+
+            }
+            return result.toString();
+        }
     }
 }

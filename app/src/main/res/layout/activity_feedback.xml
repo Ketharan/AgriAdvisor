@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentRight="true"
+    android:layout_margin="5dp"
+
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context="com.advisor.agriot.zeon.agriadvisor.cultivation">
+
+    <RelativeLayout
+        android:id="@+id/re1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/textView_fertilizer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:gravity="left"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="What do you think about our app?"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textView_fertilizer"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="3dp"
+            android:padding="0dp"
+            android:paddingRight="15dp"
+            android:text="Required *"
+            android:textColor="@color/btn_logut_bg"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_alignBottom="@+id/username"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+
+            android:layout_below="@+id/textView10"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="3dp"
+            android:background="@color/main_divider" />
+
+        <ImageView
+            android:id="@+id/feed2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/divider"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="14dp"
+            android:layout_toRightOf="@+id/feed1"
+
+            android:visibility="visible"
+            app:srcCompat="@drawable/feed2" />
+
+        <ImageView
+            android:id="@+id/feed1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/divider"
+            android:layout_below="@+id/divider"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="14dp"
+            app:srcCompat="@drawable/feed1" />
+
+        <ImageView
+            android:id="@+id/feed3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/divider"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="14dp"
+            android:layout_toRightOf="@+id/feed2"
+            app:srcCompat="@drawable/feed3" />
+
+        <ImageView
+            android:id="@+id/feed4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/feed5"
+            android:layout_below="@+id/divider"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="14dp"
+            android:layout_toRightOf="@+id/feed3"
+            app:srcCompat="@drawable/feed4" />
+
+        <ImageView
+            android:id="@+id/feed5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/divider"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="14dp"
+            android:layout_toRightOf="@+id/feed4"
+
+            app:srcCompat="@drawable/feed5" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/re1"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/border">
+
+        <TextView
+            android:id="@+id/feedQ2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:text="What would you like to share with us about our services?"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="What would you like to share with us about our services?" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/feedQ2"
+
+            android:layout_marginRight="10dp"
+            android:text="Required *"
+            android:textColor="@color/btn_logut_bg"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_alignBottom="@+id/username"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+
+            android:layout_below="@+id/textView13"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="3dp"
+            android:background="@color/main_divider" />
+
+        <EditText
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:hint="Add your thoughts......"
+            android:padding="10dp"
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            android:layout_alignTop="@+id/divider2"
+            android:layout_alignStart="@+id/divider2"
+            android:layout_alignEnd="@+id/feedQ2" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/re2"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/border"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="12dp"
+            android:autoText="true"
+            android:text="How likely would you recommend Agriot  to your friends and collegues?"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_alignBottom="@+id/username"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+
+            android:layout_below="@+id/textView16"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="3dp"
+            android:background="@color/main_divider" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/divider3"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:weightSum="11">
+
+            <Button
+                android:id="@+id/button11"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="1" />
+
+            <Button
+                android:id="@+id/button12"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:text="2" />
+
+            <Button
+                android:id="@+id/button13"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="3" />
+
+            <Button
+                android:id="@+id/button14"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="4" />
+
+            <Button
+                android:id="@+id/button15"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.13"
+                android:text="5" />
+
+            <Button
+                android:id="@+id/button16"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="6" />
+
+            <Button
+                android:id="@+id/button18"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="7" />
+
+            <Button
+                android:id="@+id/button19"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="8" />
+
+            <Button
+                android:id="@+id/button20"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="9" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/divider3"
+            android:layout_below="@+id/linearLayout"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="6dp"
+            android:text="Not at all"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView19"
+            android:layout_alignBottom="@+id/textView19"
+            android:layout_alignEnd="@+id/divider3"
+            android:text="Very likely"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

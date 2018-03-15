@@ -85,12 +85,14 @@ public class hspotConnect extends AppCompatActivity{
                 String name = deviceName.getText().toString().trim();
                 if(validateId(id) && validateName(name)){
                     DeviceData devdata = new DeviceData("28 C","87 %","1500L","48 %","21 S");
-                    deviceNode dn = new deviceNode(devdata,"Just now","","Null","70%","Null","Null");
+                    deviceNode dn = new deviceNode(devdata,123456879878L,"","Null","70%","Null",name);
                     ref = firebaseDatabase.getReference();
                     auth = FirebaseAuth.getInstance();
                     user=auth.getCurrentUser();
                     DatabaseReference devRef =  ref.child(user.getUid()).child("device").child(id);
                     devRef.setValue(dn);
+                    DatabaseReference outDevRef =  ref.child("deviceId").child(id);
+                    outDevRef.setValue(user.getUid());
                     Intent i = new Intent(hspotConnect.this, exactConnect.class);
                     i.putExtra("id",id);
                     startActivity(i);

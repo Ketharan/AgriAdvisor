@@ -1,5 +1,6 @@
 package com.advisor.agriot.zeon.agriadvisor;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -30,6 +31,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import android.location.Location;
+
 public class EditUserProfileActivity extends AppCompatActivity implements View.OnClickListener{
     private Button btnsave,btnlogout;
     private EditText textfirstname,textlastname,textphonenumber,textstreetaddress,textstrretoptional,textcity,textprovince;
@@ -40,11 +43,96 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
     private ProgressBar progressBar;
     private DatabaseReference databaseReference;
     private ArrayList<String> arrayList;
+    public double longtitude = 0.0;
+    public double latitude = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user_profile);
+
+        final ProgressDialog progress = new ProgressDialog(EditUserProfileActivity.this);
+        progress.setTitle("Location finding....");
+        progress.setMessage("Trying to get the location");
+        progress.setCancelable(false);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        //getting gps location
+        gpsGetter.LocationResult locationResult;
+        gpsGetter myGps = new gpsGetter();
+
+        locationResult = new gpsGetter.LocationResult(){
+            @Override
+            public void gotLocation(Location location){
+                longtitude = location.getLongitude();
+                latitude = location.getLatitude();
+            }
+
+        };
+        myGps.getLocation(this, locationResult);
+
+
+
+
+        //waiting for GPS location
+        final Thread t = new Thread() {
+            Object lock = new Object();
+
+            int counter = 1;
+            @Override
+            public void run() {
+                try {
+                    //check if connected!
+                    while (!isLocationDerived()) {
+                        //Wait to connect
+                        counter++;
+                        if(counter > 25){
+                            progress.dismiss();
+                            EditUserProfileActivity.this.runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+
+
+
+                                    final Toast toast;
+                                    CharSequence message = "Connection Failed, Retry";
+                                    int duration = Toast.LENGTH_LONG;
+                                    Context context = getApplicationContext();
+                                    toast = Toast.makeText(context,message,duration);
+                                    toast.show();
+
+
+
+
+
+
+                                }
+                            });
+                            this.destroy();
+                        }
+                        Thread.sleep(1000);
+                    }
+
+                    //progress.setMessage("Connected!!");
+                    progress.dismiss();
+                    EditUserProfileActivity.this.runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),"Location derived",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+
+
+                } catch (Exception e) {
+                }
+            }
+        };
+        t.start();
+        progress.show();
 
 
         btnlogout=(Button) findViewById(R.id.btnedituserprofile__Logout);
@@ -78,17 +166,17 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         FirebaseUser user=auth.getCurrentUser();
         profilename.setText(auth.getCurrentUser().getEmail());
 
-        databaseReference.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(user.getUid()).child("userDetails").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserProfileDatabase userProfileDatabase=dataSnapshot.getValue(UserProfileDatabase.class);
-                textfirstname.setText(userProfileDatabase.firstname);
-                textlastname.setText(userProfileDatabase.lastname);
+                textfirstname.setText(userProfileDatabase.firstName);
+                textlastname.setText(userProfileDatabase.lastName);
                 textcity.setText(userProfileDatabase.city);
-                textphonenumber.setText(userProfileDatabase.phonenumber);
+                textphonenumber.setText(userProfileDatabase.phoneNumber);
                 textprovince.setText(userProfileDatabase.province);
-                textstreetaddress.setText(userProfileDatabase.streetaddress);
-                textstrretoptional.setText(userProfileDatabase.optionalstreetaddress);
+                textstreetaddress.setText(userProfileDatabase.streetAddress);
+                textstrretoptional.setText(userProfileDatabase.streetAddress2);
             }
 
             @Override
@@ -100,32 +188,39 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
 
 
     }
+
+
+    public boolean isLocationDerived(){
+        return ((longtitude != 0) && (latitude != 0));
+    }
+
+
     private void savedata(){
-        String firstname=textfirstname.getText().toString().trim();
-        String lastname=textlastname.getText().toString().trim();
-        String phonenumber=textphonenumber.getText().toString().trim();
-        String streetaddress=textstreetaddress.getText().toString().trim();
-        String optionalstreetaddress=textstrretoptional.getText().toString().trim();
+        String firstName=textfirstname.getText().toString().trim();
+        String lastName=textlastname.getText().toString().trim();
+        String phoneNumber=textphonenumber.getText().toString().trim();
+        String streetAddress=textstreetaddress.getText().toString().trim();
+        String streetAddress2=textstrretoptional.getText().toString().trim();
         String city=textcity.getText().toString().trim();
         String province=textprovince.getText().toString().trim();
-        if(TextUtils.isEmpty(firstname)){
+        if(TextUtils.isEmpty(firstName)){
             Toast.makeText(getApplicationContext(),"Please Enter First Name",Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(lastname)){
+        if(TextUtils.isEmpty(lastName)){
             Toast.makeText(getApplicationContext(),"Please Enter Last Name",Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(phonenumber)){
+        if(TextUtils.isEmpty(phoneNumber)){
             Toast.makeText(getApplicationContext(),"Please Enter Your Phone Number",Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(streetaddress)){
+        if(TextUtils.isEmpty(streetAddress)){
             Toast.makeText(getApplicationContext(),"Please Enter Street Address",Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(optionalstreetaddress)){
-            optionalstreetaddress="NONE";
+        if(TextUtils.isEmpty(streetAddress2)){
+            streetAddress2="NONE";
 
         }
         if(TextUtils.isEmpty(city)){
@@ -137,11 +232,11 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
             return;
         }
 
-        UserProfileDatabase Userinformation=new UserProfileDatabase(firstname,lastname,phonenumber,streetaddress,optionalstreetaddress,city,province);
+        UserProfileDatabase Userinformation=new UserProfileDatabase(firstName,lastName,phoneNumber,streetAddress,streetAddress2,city,province,latitude,longtitude,"WL3","NULL");
         FirebaseUser user=auth.getCurrentUser();
 
 
-        databaseReference.child(user.getUid()).setValue(Userinformation).addOnCompleteListener(this, new OnCompleteListener<Void>() {
+        databaseReference.child(user.getUid()).child("userDetails").setValue(Userinformation).addOnCompleteListener(this, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 

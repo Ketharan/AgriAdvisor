@@ -46,7 +46,7 @@ public class cropDataAdapter extends RecyclerView.Adapter<cropDataAdapter.MyView
         view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cart_crop_g1, parent, false);
 
-        view.setOnClickListener(cropSuitability.myOnClickListener);
+        view.setOnClickListener(cropSuitability.myOnClickListenerCrop);
 
         myViewHolder = new MyViewHolder(view);
 
@@ -56,7 +56,7 @@ public class cropDataAdapter extends RecyclerView.Adapter<cropDataAdapter.MyView
 
             myViewHolder = new MyViewHolder(view);
             cropDataAdapter.counter++;
-            view.setOnClickListener(cropSuitability.myOnClickListener);
+            view.setOnClickListener(cropSuitability.myOnClickListenerCrop);
             return myViewHolder;
 
         }else if (cropDataAdapter.typeArray.get(cropDataAdapter.counter)== 2) {
@@ -64,14 +64,14 @@ public class cropDataAdapter extends RecyclerView.Adapter<cropDataAdapter.MyView
                     .inflate(R.layout.carts_crop_g2, parent, false);
             myViewHolder = new MyViewHolder(view);
             cropDataAdapter.counter++;
-            view.setOnClickListener(cropSuitability.myOnClickListener);
+            view.setOnClickListener(cropSuitability.myOnClickListenerCrop);
             return myViewHolder;
         }else if (cropDataAdapter.typeArray.get(cropDataAdapter.counter)== 3) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.carts_crop_g3, parent, false);
             myViewHolder = new MyViewHolder(view);
             cropDataAdapter.counter++;
-            view.setOnClickListener(cropSuitability.myOnClickListener);
+            view.setOnClickListener(cropSuitability.myOnClickListenerCrop);
             return myViewHolder;
         }
         return myViewHolder;

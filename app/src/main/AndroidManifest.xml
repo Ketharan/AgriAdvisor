@@ -65,7 +65,32 @@
         <activity
             android:name=".store"
             android:label="@string/agri_stock" />
-        <activity android:name=".currentCrops"></activity>
+        <activity
+            android:name=".currentCrops"
+            android:label="CURRENT CROPS" />
+        <activity
+            android:name=".cultivation"
+            android:label="CROP CULTIVATION" />
+        <activity
+            android:name=".fertilizer"
+            android:label="FERTILIZATION" />
+        <activity
+            android:name=".pesticide"
+            android:label="PESTICIDES" />
+        <activity
+            android:name=".pestInitial"
+            android:label="PEST CONTROL" />
+        <activity
+            android:name=".imageActivity"
+            android:label="PEST CONTROL" />
+        <activity
+            android:name=".pestPart"
+            android:label="PEST CONTROL" />
+        <activity android:name=".pestPartAdapter" />
+        <activity
+            android:name=".contact"
+            android:label="CONTACTS" />
+        <activity android:name=".feedback"></activity>
     </application>
 
 </manifest>

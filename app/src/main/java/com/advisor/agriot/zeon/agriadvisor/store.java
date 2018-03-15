@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,7 @@ public class store extends AppCompatActivity {
     private static ArrayList<storeStructure> data;
     static View.OnClickListener myOnClickListener;
     private static ArrayList<Integer> removedItems;
+    private  String cropName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,14 @@ public class store extends AppCompatActivity {
         setContentView(R.layout.store);
 
         //myOnClickListener = new MyOnClickListener(this);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras !=null) {
+            cropName = extras.getString("crop");
+
+            Log.d("cropName",cropName);
+
+        }
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_store);
         recyclerView.setHasFixedSize(true);
@@ -45,7 +55,7 @@ public class store extends AppCompatActivity {
         data = new ArrayList<storeStructure>();
         for (int i = 0; i < storeData.shopArray.length; i++) {
             data.add(new storeStructure(
-                    "Rice",
+                    cropName,
                     storeData.shopArray[i],
                     storeData.describtionArray[i],
                     storeData.starCount_[i],
@@ -57,5 +67,6 @@ public class store extends AppCompatActivity {
 
         adapter = new storeAdapter(data);
         recyclerView.setAdapter(adapter);
+        storeAdapter.counter =0;
     }
 }

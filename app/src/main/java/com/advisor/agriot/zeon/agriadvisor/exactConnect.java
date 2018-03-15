@@ -50,7 +50,7 @@ public class exactConnect extends AppCompatActivity {
     String wifis[];
     private Handler mHandler;
     EditText pass;
-    public String SSID;
+    public static String SSID;
     public String password;
     String id;
 
@@ -165,24 +165,27 @@ public class exactConnect extends AppCompatActivity {
     }
 
     public static boolean isConnected(Context context) {
+        String ssid = "";
         ConnectivityManager connectivityManager = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = null;
+        WifiInfo wifiInfo = null;
         if (connectivityManager != null) {
             networkInfo = connectivityManager.getActiveNetworkInfo();
+            wifiInfo = mainWifiObj.getConnectionInfo();
+            ssid = wifiInfo.getSSID();
+            Log.d("ssidNew",ssid );
         }
 
-        return networkInfo != null && networkInfo.getState() == NetworkInfo.State.CONNECTED;
+
+        return networkInfo != null && networkInfo.getState() == NetworkInfo.State.CONNECTED && ssid.equals(String.format("\"%s\"", SSID));
     }
 
 
 
 
 
-    protected void onPause() {
-        unregisterReceiver(wifiReciever);
-        super.onPause();
-    }
+
 
     protected void onResume() {
         registerReceiver(wifiReciever, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));

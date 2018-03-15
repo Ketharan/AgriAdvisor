@@ -18,7 +18,7 @@ public class confiqureDevice extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("http://35.187.239.118/Agriot/cropSuitability/web/index.php");
+        webView.loadUrl("http://192.168.4.1/wifi?");
 
         goBack = (Button) findViewById(R.id.back);
         goBack.setOnClickListener(new View.OnClickListener() {

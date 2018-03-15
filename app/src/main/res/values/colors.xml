@@ -15,7 +15,7 @@
 
     <!--code implemented-->
     <color name="button_theme_color">#b0f2b9</color>
-    <color name="bg_login">#26ae90</color>
+    <color name="bg_login">#067306</color>
     <color name="bg_register">#2e3237</color>
     <color name="bg_main">#428bca</color>
     <color name="white">#ffffff</color>
@@ -40,10 +40,12 @@
     <color name = "divider_farming"> #B3E5FC </color>
     <color name = "divider_gardening"> #AED581 </color>
 
-    <color name = "general"> #FFAB91 </color>
-    <color name = "fertilizer"> #4DD0E1 </color>
+    <color name = "general"> #FFCCBC </color>
 
-    <color name = "pesticide"> #B3E5FC </color>
+    <color name = "pesticide">#45f275</color>
+
+    <color name = "cultivation"> #F0F4C3 </color>
+    <color name = "fertilizer"> #B2DFDB </color>
 
 
 

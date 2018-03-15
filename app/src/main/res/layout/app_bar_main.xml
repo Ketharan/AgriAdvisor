@@ -6,10 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.advisor.agriot.zeon.agriadvisor.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -17,6 +14,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:textAlignment="gravity"
+            app:menu = "@menu/language_menu"
             app:popupTheme="@style/AppTheme.PopupOverlay" >
 
             <TextView
@@ -34,10 +32,7 @@
 
 
 
-    </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main"
-        android:id="@+id/include" />
 
     <ImageView
         android:id="@+id/imgFab"
@@ -51,6 +46,9 @@
 
         app:srcCompat="@drawable/fab" />
 
+    <!--<include-->
+        <!--android:id="@+id/include"-->
+        <!--layout="@layout/content_main" />-->
 
 
 </android.support.design.widget.CoordinatorLayout>

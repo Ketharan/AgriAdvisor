@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contactRl"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".contact">
+
+
+    <ImageView
+        android:id="@+id/imgcontact"
+        android:layout_width="match_parent"
+        android:layout_height="167dp"
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+
+        app:srcCompat="@drawable/contact" />
+
+    <ImageView
+        android:id="@+id/imgContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/imgcontact"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="190dp"
+        app:srcCompat="@drawable/ic_call_black_24dp" />
+
+    <TextView
+        android:id="@+id/txtContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imgContact"
+        android:layout_alignTop="@+id/imgContact"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/imgContact"
+        android:foregroundGravity="center_vertical|center"
+        android:gravity="center"
+        android:text="021 - 227 2532 "
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imgname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/imgContact"
+        android:layout_below="@+id/imgContact"
+        android:layout_marginTop="20dp"
+        app:srcCompat="@drawable/ic_person_black_24dp" />
+
+    <TextView
+        android:id="@+id/txtname"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtContact"
+        android:layout_alignTop="@+id/imgname"
+        android:text="Arulananthan Agricultural Instructor"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imgemail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/imgname"
+        android:layout_alignStart="@+id/imgname"
+        android:layout_below="@+id/txtname"
+        android:layout_marginTop="15dp"
+        android:tint="#000000"
+        app:srcCompat="@android:drawable/sym_action_email" />
+
+    <TextView
+        android:id="@+id/txtemail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imgemail"
+        android:layout_alignStart="@+id/txtname"
+        android:layout_alignTop="@+id/imgemail"
+        android:gravity="center"
+        android:text="Arulananthan1236@doa.lk"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imglocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/imgemail"
+        android:layout_alignStart="@+id/imgemail"
+        android:layout_below="@+id/imgemail"
+        android:layout_marginTop="26dp"
+        app:srcCompat="@drawable/location" />
+
+    <TextView
+        android:id="@+id/txtlocation"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtemail"
+        android:layout_alignTop="@+id/imglocation"
+        android:text="217, Bandaranayake Mawatha, Kaddubeththa, \nMoratuwa"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imgoffice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/imglocation"
+        android:layout_below="@+id/txtlocation"
+        android:layout_marginTop="12dp"
+        app:srcCompat="@drawable/office" />
+
+    <TextView
+        android:id="@+id/txtoffice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imgoffice"
+        android:layout_alignStart="@+id/txtlocation"
+        android:layout_alignTop="@+id/imgoffice"
+        android:text="8:30 AM to 4:30 PM"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView9"
+        android:layout_alignStart="@+id/txtoffice"
+        android:layout_alignTop="@+id/imageView9"
+        android:foregroundGravity="center"
+        android:gravity="center_vertical|center"
+        android:text="You can meet and talk to AI during office hours"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/imgoffice"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="10dp"
+        android:foregroundGravity="bottom|left"
+        app:srcCompat="@drawable/iconinfo" />
+</RelativeLayout>

@@ -6,7 +6,7 @@ package com.advisor.agriot.zeon.agriadvisor;
 
 public class deviceNode {
     public DeviceData data;
-    public String lastBroadcast;
+    public Long lastBroadcast;
     public String nutrients;
     public String maintenance;
     public String battery;
@@ -17,7 +17,7 @@ public class deviceNode {
 
     }
 
-    public deviceNode(DeviceData data, String lastBroadcast, String nutrients, String maintenance, String battery, String notification,String deviceName) {
+    public deviceNode(DeviceData data, Long lastBroadcast, String nutrients, String maintenance, String battery, String notification,String deviceName) {
         this.data = data;
         this.lastBroadcast = lastBroadcast;
         this.nutrients = nutrients;

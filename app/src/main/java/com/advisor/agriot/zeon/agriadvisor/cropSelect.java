@@ -114,7 +114,11 @@ public class cropSelect extends AppCompatActivity {
         storeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(cropSelect.this,store.class));
+                Intent intent = new Intent(cropSelect.this,store.class);
+                intent.putExtra("crop",cropName);
+                startActivity(intent);
+                startActivity(intent);
+
             }
         });
 
@@ -129,7 +133,7 @@ public class cropSelect extends AppCompatActivity {
                 if (indicator.equals("ADD")){
 
                     ref.child(user.getUid()).child("currentCrops").child(cropName).child("startDate").setValue(formattedDate);
-                    ref.child(user.getUid()).child("notification").child("0").setValue("You have selected new crop " + cropName);
+
                     btnAdd.setText("REMOVE");
 
 
@@ -137,7 +141,6 @@ public class cropSelect extends AppCompatActivity {
 
                 } else {
                     ref.child(user.getUid()).child("currentCrops").child(cropName).child("startDate").setValue(null);
-                    ref.child(user.getUid()).child("notification").child("0").setValue("You have remove already added crop" + cropName);
                     btnAdd.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_black_24dp,0,0,0);
                     btnAdd.setText("ADD");
                 }

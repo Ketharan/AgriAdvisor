@@ -53,6 +53,7 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
     private DatabaseReference databaseReference;
     public double longtitude = 0.0;
     public double latitude = 0.0;
+    FirebaseUser user;
 
 
 
@@ -148,8 +149,8 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
 
 
 
-        btntest=(Button) findViewById(R.id.btnTest);
-        btnlogout=(Button) findViewById(R.id.btnUserprofile_Logout);
+
+
         btnsave=(Button) findViewById(R.id.btnSave);
         textfirstname=(EditText) findViewById(R.id.editTextfirstname);
         textlastname=(EditText) findViewById(R.id.editTextlastname);
@@ -159,13 +160,13 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
         textcity=(EditText) findViewById(R.id.editTextcity);
         textprovince=(EditText) findViewById(R.id.editTextprovince);
 
-        profilename=(TextView)findViewById(R.id.textprofilename);
+
         auth = FirebaseAuth.getInstance();
         progressBar=(ProgressBar) findViewById(R.id.progressBar);
 
         btnsave.setOnClickListener(this);
         btnlogout.setOnClickListener(this);
-        btntest.setOnClickListener(this);
+
         databaseReference= FirebaseDatabase.getInstance().getReference();
 
         //check current user
@@ -174,7 +175,7 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
              finish();
             startActivity(new Intent(getApplicationContext(),LoginActivity.class));
         }
-        FirebaseUser user=auth.getCurrentUser();
+        user=auth.getCurrentUser();
         profilename.setText(auth.getCurrentUser().getEmail());
         //check internet connection
         connected = false;
@@ -199,6 +200,7 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
 
 
     public class SendRequest extends AsyncTask<String, Void, String> {
+        final ProgressDialog prog = new ProgressDialog(UserProfile.this);
         JSONObject postDataParams = new JSONObject();
         protected void onPreExecute() {
             String firstname=textfirstname.getText().toString().trim();
@@ -210,6 +212,15 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
             String province=textprovince.getText().toString().trim();
             gpsGetter.LocationResult locationResult;
             FirebaseUser user=auth.getCurrentUser();
+
+
+            prog.setTitle("Posting data....");
+            prog.setMessage("Wait.......!");
+            prog.setCancelable(false);
+            prog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            prog.show();
+
+
 
 
 
@@ -300,9 +311,17 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
 
         @Override
         protected void onPostExecute(String result) {
+            prog.dismiss();
             Toast.makeText(getApplicationContext(), "profile updated",
                     Toast.LENGTH_LONG).show();
-            startActivity(new Intent(UserProfile.this,MainActivity.class));
+
+            Intent intent = new Intent(UserProfile.this,MainActivity.class);
+            intent.putExtra("latitude",latitude);
+            intent.putExtra("longtitude",longtitude);
+            intent.putExtra("uid",user.getUid());
+            startActivity(intent);
+
+
 
         }
 
@@ -403,7 +422,7 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
 //            }
 //        });
         new SendRequest().execute();
-
+        //new setZone().execute();
 
 
     }
@@ -429,5 +448,118 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
             Toast.makeText(getApplicationContext(),"Internet conncetion lost.Please CHeck Your Internet connection.",Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+
+    public class setZone extends AsyncTask<String, Void, String> {
+        JSONObject postDataParams = new JSONObject();
+        protected void onPreExecute() {
+            try {
+                postDataParams.put("save", "ok");
+                postDataParams.put("latitude",latitude);
+                postDataParams.put("longtitude", longtitude);
+                postDataParams.put("uid", user.getUid());
+
+            } catch (Exception e) {
+                //String("Exception: " + e.getMessage());
+            }
+        }
+
+        public void setParams(){
+
+        }
+
+        protected String doInBackground(String... arg0) {
+
+            try {
+
+                URL url = new URL("http://35.187.239.118/Agriot/Location/index.php");
+
+//                JSONObject postDataParams = new JSONObject();
+//
+//
+//
+//                postDataParams.put("save", textcity.getText().toString().trim());
+//                postDataParams.put("zone", "100");
+//                postDataParams.put("season", "abc");
+//                postDataParams.put("group", "100");
+//                postDataParams.put("crop", "ketha");
+
+                Log.e("params", postDataParams.toString());
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(15000 /* milliseconds */);
+                conn.setConnectTimeout(15000 /* milliseconds */);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
+
+                writer.flush();
+                writer.close();
+                os.close();
+
+                int responseCode = conn.getResponseCode();
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuffer sb = new StringBuffer("");
+                    String line = "";
+
+                    while ((line = in.readLine()) != null) {
+
+                        sb.append(line);
+                        break;
+                    }
+
+                    in.close();
+                    return sb.toString();
+
+                } else {
+                    return new String("false : " + responseCode);
+                }
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(getApplicationContext(), "profile updated",
+                    Toast.LENGTH_LONG).show();
+            startActivity(new Intent(UserProfile.this,MainActivity.class));
+
+        }
+
+
+        public String getPostDataString(JSONObject params) throws Exception {
+
+            StringBuilder result = new StringBuilder();
+            boolean first = true;
+
+            Iterator<String> itr = params.keys();
+
+            while (itr.hasNext()) {
+
+                String key = itr.next();
+                Object value = params.get(key);
+
+                if (first)
+                    first = false;
+                else
+                    result.append("&");
+
+                result.append(URLEncoder.encode(key, "UTF-8"));
+                result.append("=");
+                result.append(URLEncoder.encode(value.toString(), "UTF-8"));
+
+            }
+            return result.toString();
+        }
     }
 }

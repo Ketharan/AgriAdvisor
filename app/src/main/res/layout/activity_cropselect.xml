@@ -22,12 +22,36 @@
         android:layout_height="4dp"
         android:background="#aed581"
         android:padding="15dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Do you want To grow the crop:"
-        android:paddingLeft="10dp"
-        android:textSize="20dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtInitial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="Add to current crop list :"
+            android:textSize="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:id="@+id/btnAddCrop"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="0.74"
+            android:background="#fff176"
+            android:drawableLeft="@drawable/ic_add_black_24dp"
+            android:padding="10dp"
+            android:text="ADD" /></RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,28 +60,36 @@
         android:layout_marginTop="10dp"
         android:weightSum="3">
 
-        <Button
-            android:id="@+id/btnAddCrop"
-            android:layout_width="68dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_margin="10dp"
-            android:layout_weight="0.74"
-            android:background="#fff176"
-            android:drawableLeft="@drawable/ic_add_black_24dp"
-            android:padding="10dp"
-            android:text="ADD" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/goStore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_margin="10dp"
-            android:background="#fff176"
-            android:drawableLeft="@drawable/ic_local_grocery_store_black_24dp"
-            android:padding="10dp"
-            android:text="Store" />
+            <TextView
+                android:id="@+id/txtStore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/goStore"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:text="Check for crop providers :"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/goStore"
+                android:layout_width="105dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"
+                android:background="#fff176"
+                android:drawableLeft="@drawable/ic_local_grocery_store_black_24dp"
+                android:padding="10dp"
+                android:text="Store" />
+        </RelativeLayout>
+
 
     </LinearLayout>
 
@@ -88,6 +120,7 @@
 
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
@@ -99,11 +132,12 @@
         <TextView
             android:id="@+id/data01"
             android:layout_width="100dp"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
             android:background="#c5e1a5"
             android:gravity="center"
             android:text="Market Price per kilogram\n 112.00"
+            android:textAlignment="inherit"
             android:textColor="#000000"
             android:textSize="15dp" />
 
@@ -111,7 +145,7 @@
         <TextView
             android:id="@+id/data02"
             android:layout_width="100dp"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
@@ -134,10 +168,11 @@
         <TextView
 
             android:id="@+id/data10"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
 
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1.25"
             android:background="#9ccc65"
             android:padding="10dp"
@@ -148,12 +183,12 @@
         <TextView
 
             android:id="@+id/data11"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
 
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="#9ccc65"
+            android:gravity="center"
             android:padding="10dp"
             android:text="25.00"
             android:textColor="#2196F3"
@@ -174,11 +209,11 @@
         <TextView
 
             android:id="@+id/data20"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
 
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_weight="2"
+            android:layout_weight="1.25"
             android:background="#9ccc65"
             android:padding="10dp"
             android:text="Profit after Cultivation:"
@@ -188,12 +223,13 @@
         <TextView
 
             android:id="@+id/data21"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
 
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:background="#9ccc65"
+            android:gravity="center"
             android:padding="10dp"
             android:text="13%"
             android:textColor="#2196F3"
@@ -215,7 +251,7 @@
         android:layout_margin="10dp"
         android:layout_marginTop="15dp"
         android:background="#9ccc65"
-        android:padding="10dp"
+        android:padding="2dp"
         android:text="Tomato is not resistant to drought.\n"
         android:textColor="#d50000"
         android:textSize="16dp" />

@@ -4,6 +4,9 @@ package com.advisor.agriot.zeon.agriadvisor;
  * Created by Haran on 23/07/2017.
  */
 
+import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,12 +32,19 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
         TextView textViewIndicator;
 
 
+
+
+
         public MyViewHolder(View itemView) {
             super(itemView);
+
             this.textViewNotification = (TextView) itemView.findViewById(R.id.notification);
 
             this.imageViewIcon = (ImageView) itemView.findViewById(R.id.notification_image);
+
             this.textViewIndicator = (TextView) itemView.findViewById(R.id.textIndicator);
+            textViewNotification.setTypeface(MainActivity.ass.getFont());
+
         }
     }
 
@@ -65,28 +75,28 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
 
         }else if (notificationAdapter.typeArray[notificationAdapter.counter]== 2) {
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.irrigation, parent, false);
-            notificationAdapter.counter++;
+                    .inflate(R.layout.cultivation, parent, false);
+
         }else if (notificationAdapter.typeArray[notificationAdapter.counter]== 3) {
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.cards_layout_main, parent, false);
-            notificationAdapter.counter++;
+                    .inflate(R.layout.fertilizer, parent, false);
+
         }else if (notificationAdapter.typeArray[notificationAdapter.counter]== 4) {
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.cards_layout_main, parent, false);
-            notificationAdapter.counter++;
+                    .inflate(R.layout.irrigation, parent, false);
+
         }else if (notificationAdapter.typeArray[notificationAdapter.counter]== 5) {
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.cards_layout_main, parent, false);
-            notificationAdapter.counter++;
+                    .inflate(R.layout.pesticide, parent, false);
+
         }else if (notificationAdapter.typeArray[notificationAdapter.counter]== 6) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.cards_layout_main, parent, false);
-            notificationAdapter.counter++;
+
         }else if (notificationAdapter.typeArray[notificationAdapter.counter]== 7) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.cards_layout_main, parent, false);
-            notificationAdapter.counter++;
+
         }else{
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.cards_layout_main, parent, false);
@@ -113,6 +123,8 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
 
         TextView textViewName = holder.textViewNotification;
 
+
+
         ImageView imageView = holder.imageViewIcon;
 
         TextView textIndicator = holder.textViewIndicator;
@@ -124,6 +136,8 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
 
         textIndicator.setText(Integer.toString(notificationSet.get(listPosition).getIndicator()));
     }
+
+
 
     @Override
     public int getItemCount() {

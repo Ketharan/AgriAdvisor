@@ -1,5 +1,6 @@
 package com.advisor.agriot.zeon.agriadvisor;
 
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.FragmentManager;
@@ -16,15 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ImageView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v4.widget.Space;
@@ -41,18 +34,23 @@ import java.util.ArrayList;
 
 
 public class cropSuitability extends AppCompatActivity {
-    private static RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private static RecyclerView recyclerView;
-    private static ArrayList<crop> data;
-    static View.OnClickListener myOnClickListener;
-    private static ArrayList<Integer> removedItems;
+    private static RecyclerView.Adapter adapterCrop;
+    private RecyclerView.LayoutManager layoutManagerCrop;
+    private static RecyclerView recyclerViewCrop;
+    private static ArrayList<crop> dataCrop;
+    static View.OnClickListener myOnClickListenerCrop;
+    private static ArrayList<Integer> removedItemsCrop;
 
 
-    private FirebaseAuth auth;
+    private FirebaseAuth authCrop;
 
-    private DatabaseReference databaseReference;
-    private FirebaseUser user;
+    private DatabaseReference databaseReferenceCrop;
+    private FirebaseUser userCrop;
+    private DatabaseReference cropSuitCrop;
+    private ValueEventListener getCropSuitCrop;
+
+    private FirebaseDatabase firebaseDatabase;
+
 
 
     @Override
@@ -62,36 +60,36 @@ public class cropSuitability extends AppCompatActivity {
 
 
         //firebase
-        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
         //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
 
-        databaseReference = firebaseDatabase.getReference();
+        databaseReferenceCrop = firebaseDatabase.getReference();
 
 
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
+        authCrop = FirebaseAuth.getInstance();
+        userCrop = authCrop.getCurrentUser();
 
         //crop Suitability
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerViewCrop = (RecyclerView) findViewById(R.id.rv_crop_suit);
 
-        recyclerView.setHasFixedSize(true);
+        recyclerViewCrop.setHasFixedSize(true);
 
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        myOnClickListener = new MyOnClickListener(this);
+        layoutManagerCrop = new LinearLayoutManager(this);
+        recyclerViewCrop.setLayoutManager(layoutManagerCrop);
+        recyclerViewCrop.setItemAnimator(new DefaultItemAnimator());
+        myOnClickListenerCrop = new MyOnClickListener(this);
 
-        databaseReference.child(user.getUid()).child("suitableCrops").addValueEventListener(new ValueEventListener() {
+        cropSuitCrop = databaseReferenceCrop.child(userCrop.getUid()).child("suitableCrops");
+        getCropSuitCrop = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> datashot = dataSnapshot.getChildren();
 
-//               ArrayList<String> KEY =new ArrayList<String>();
-//               ArrayList<String > DATA =new ArrayList<String>();
-                Log.d("Hello", "datashot");
 
-                data = new ArrayList<crop>();
+               // Log.d("Hello", "datashot");
+
+                dataCrop = new ArrayList<crop>();
                 for (DataSnapshot child : datashot) {
 
                     String crop = child.getKey();
@@ -104,32 +102,37 @@ public class cropSuitability extends AppCompatActivity {
                         }
                     }
 
-                    data.add(new crop(
+                    dataCrop.add(new crop(
                             crop,
                             cropData.drawableArray[drawableIndex]
                     ));
                     cropDataAdapter.typeArray.add(Integer.valueOf(group));
-                    
 
-                    removedItems = new ArrayList<Integer>();
 
-                    adapter = new cropDataAdapter(data);
-                    recyclerView.setAdapter(adapter);
+                    removedItemsCrop = new ArrayList<Integer>();
+
+                    adapterCrop = new cropDataAdapter(dataCrop);
+                    recyclerViewCrop.setAdapter(adapterCrop);
                 }
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        };
+        cropSuitCrop.addValueEventListener(getCropSuitCrop);
+        cropDataAdapter.typeArray.clear();
+        cropDataAdapter.counter = 0;
     }
 
 
-        @Override
-        public void onResume() {
-            super.onResume();
 
+
+        protected void onStop(){
+            super.onStop();
+            cropSuitCrop.removeEventListener(getCropSuitCrop);
         }
 
 
@@ -146,12 +149,13 @@ public class cropSuitability extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                int selectedItemPosition = recyclerView.getChildPosition(v);
+                int selectedItemPosition = recyclerViewCrop.getChildPosition(v);
                 RecyclerView.ViewHolder viewHolder
-                        = recyclerView.findViewHolderForPosition(selectedItemPosition);
+                        = recyclerViewCrop.findViewHolderForPosition(selectedItemPosition);
                 TextView textViewName
                         = (TextView) viewHolder.itemView.findViewById(R.id.textViewName);
                 String cropName = (String) textViewName.getText();
+
                 Intent intent = new Intent(cropSuitability.this,cropSelect.class);
                 intent.putExtra("crop",cropName);
                 startActivity(intent);
